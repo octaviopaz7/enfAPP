@@ -3,10 +3,12 @@ import { Button, TextField, Grid, Typography, Link, Container, Box } from '@mui/
 import { useNavigate } from 'react-router-dom';
 import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
 
-
 const LoginForm = () => {
   const [usuario, setUsuario] = useState('');
   const [contraseña, setContraseña] = useState('');
+  const [errorUsuario, setErrorUsuario] = useState('');
+  const [errorContraseña, setErrorContraseña] = useState('');
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -22,7 +24,22 @@ const LoginForm = () => {
       navigate('/pisos');
     } catch (error) {
       console.error('Error al iniciar sesión:', error.message);
-      alert('Error al iniciar sesión');
+      if (error.response) {
+        const { error: errorMessage } = error.response.data;
+        if (errorMessage === 'Usuario no encontrado') {
+          setErrorUsuario('Usuario no encontrado');
+          setErrorContraseña('');
+        } else if (errorMessage === 'Contraseña incorrecta') {
+          setErrorContraseña('Contraseña incorrecta');
+          setErrorUsuario('');
+        } else {
+          setErrorUsuario('Error de autenticación');
+          setErrorContraseña('');
+        }
+      } else {
+        setErrorUsuario('Error de red');
+        setErrorContraseña('');
+      }
     }
   };
 
@@ -51,6 +68,8 @@ const LoginForm = () => {
             autoFocus
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
+            error={!!errorUsuario}
+            helperText={errorUsuario}
           />
           <TextField
             margin="normal"
@@ -63,6 +82,8 @@ const LoginForm = () => {
             autoComplete="current-password"
             value={contraseña}
             onChange={(e) => setContraseña(e.target.value)}
+            error={!!errorContraseña}
+            helperText={errorContraseña}
           />
           <Button
             type="submit"
@@ -75,7 +96,7 @@ const LoginForm = () => {
           <Grid container>
             <Grid item>
               <Link onClick={() => navigate('/register')} variant="body2" style={{ cursor: 'pointer' }}>
-                {"¿No tienes una cuenta? Regístrate"}
+                ¿No tienes una cuenta? Regístrate
               </Link>
             </Grid>
           </Grid>

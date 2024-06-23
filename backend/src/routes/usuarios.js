@@ -9,7 +9,7 @@ router.post('/register', async (req, res) => {
   try {
     const usuarioExiste = await Usuario.findOne({ usuario });
     if (usuarioExiste) {
-      return res.status(400).json({ message: 'El nombre de usuario ya existe' });
+      return res.status(400).json({ error: 'El nombre de usuario ya existe' });
     }
 
     const nuevoUsuario = new Usuario({ usuario, contraseña });
@@ -30,12 +30,12 @@ router.post('/login', async (req, res) => {
     // Verificar si el usuario existe en la base de datos
     const usuarioExistente = await Usuario.findOne({ usuario });
     if (!usuarioExistente) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
     // Comparar la contraseña ingresada con la almacenada en la base de datos
     if (contraseña !== usuarioExistente.contraseña) {
-      return res.status(401).json({ message: 'Contraseña incorrecta' });
+      return res.status(401).json({ error: 'Contraseña incorrecta' });
     }
 
     // Si la autenticación es exitosa, enviar una respuesta

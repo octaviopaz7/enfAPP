@@ -1,21 +1,48 @@
 import React, { useState } from 'react';
-import { Button, TextField, Typography, Container, Box } from '@mui/material';
+import { Button, TextField, Typography, Container, Box, Grid, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
 
 const FormRegistro = () => {
   const [usuario, setUsuario] = useState('');
   const [contraseña, setContraseña] = useState('');
+  const [confirmarContraseña, setConfirmarContraseña] = useState('');
+  const [errorUsuario, setErrorUsuario] = useState('');
+  const [errorContraseña, setErrorContraseña] = useState('');
+  const [errorConfirmarContraseña, setErrorConfirmarContraseña] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    // Validar que las contraseñas coincidan
+    if (contraseña !== confirmarContraseña) {
+      setErrorConfirmarContraseña('Las contraseñas no coinciden');
+      return;
+    }
+
     try {
       const response = await api.post('/usuarios/register', { usuario, contraseña });
       console.log(response.data);
       navigate('/login');
     } catch (error) {
       console.error('Error al registrar usuario:', error.message);
+      if (error.response) {
+        const { error: errorMessage } = error.response.data;
+        if (errorMessage === 'El nombre de usuario ya existe') {
+          setErrorUsuario('El nombre de usuario ya está en uso');
+          setErrorContraseña('');
+          setErrorConfirmarContraseña('');
+        } else {
+          setErrorUsuario('Error al registrar usuario');
+          setErrorContraseña('');
+          setErrorConfirmarContraseña('');
+        }
+      } else {
+        setErrorUsuario('Error de red');
+        setErrorContraseña('');
+        setErrorConfirmarContraseña('');
+      }
     }
   };
 
@@ -44,6 +71,8 @@ const FormRegistro = () => {
             autoFocus
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
+            error={!!errorUsuario}
+            helperText={errorUsuario}
           />
           <TextField
             margin="normal"
@@ -56,6 +85,22 @@ const FormRegistro = () => {
             autoComplete="new-contraseña"
             value={contraseña}
             onChange={(e) => setContraseña(e.target.value)}
+            error={!!errorContraseña}
+            helperText={errorContraseña}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="confirmarContraseña"
+            label="Confirmar Contraseña"
+            type="password"
+            id="confirmarContraseña"
+            autoComplete="new-contraseña"
+            value={confirmarContraseña}
+            onChange={(e) => setConfirmarContraseña(e.target.value)}
+            error={!!errorConfirmarContraseña}
+            helperText={errorConfirmarContraseña}
           />
           <Button
             type="submit"
@@ -65,6 +110,13 @@ const FormRegistro = () => {
           >
             Registrarse
           </Button>
+          <Grid container>
+            <Grid item>
+              <Link onClick={() => navigate('/login')} variant="body2" style={{ cursor: 'pointer' }}>
+                ¿Ya tienes una cuenta? Accede Aquí
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Menu, MenuItem, Box } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -56,6 +56,13 @@ const NavBar = () => {
   const [medications, setMedications] = useState([]);
   const navigate = useNavigate();
   const isMenuOpen = Boolean(anchorEl);
+
+  useEffect(() => {
+    const usuario = localStorage.getItem('usuario');
+    if (usuario) {
+      setNombreUsuario(usuario);
+    }
+  }, []);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -147,6 +154,14 @@ const NavBar = () => {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' }, cursor: 'pointer', marginRight: '10px' }}
+            >
+              {nombreUsuario && `Bienvenido, ${nombreUsuario}`}
+            </Typography>
             <IconButton
               size="large"
               edge="end"
@@ -170,7 +185,6 @@ const NavBar = () => {
         open={isMenuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem disabled>{nombreUsuario}</MenuItem>
         <MenuItem onClick={handleChangePassword}>Cambiar Contraseña</MenuItem>
         <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
       </Menu>

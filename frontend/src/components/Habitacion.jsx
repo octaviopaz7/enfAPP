@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../../backend/src/routes/api';
 import PacienteForm from './PacienteForm';
-import { Button } from '@mui/material';
+import { Button, Container, Typography, Grid, Card, CardContent } from '@mui/material';
+import { Delete , Edit  } from '@mui/icons-material';
 import { useHabitaciones } from './hooks/HabitacionesContext';
 
 const Habitacion = () => {
@@ -12,7 +13,7 @@ const Habitacion = () => {
   const [loading, setLoading] = useState(true);
   const [paciente, setPaciente] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const { obtenerEstadoHabitaciones } = useHabitaciones(); 
+  const { obtenerEstadoHabitaciones } = useHabitaciones();
 
   const handleEliminarPaciente = async () => {
     try {
@@ -70,33 +71,58 @@ const Habitacion = () => {
   }
 
   return (
-    <div className="container">
-      <div className="header">
-        <h1> Habitación {numero} - Cama {cama}</h1>
-      </div>
-      <div className="details">
-        <p>Estado: {habitacion.estado}</p>
-      </div>
-      {habitacion.estado === 'ocupada' ? (
-        <div className="paciente">
-          <h2>Datos del Paciente</h2>
-          {editMode ? (
-            <PacienteForm paciente={paciente} onSave={handleGuardarEdicion} />
-          ) : (
-            <>
-              <p>Nombre: {paciente.nombre} {paciente.apellido}</p>
-              <p>DNI: {paciente.dni}</p>
-              <p>Edad: {paciente.edad}</p>
-              <p>Dieta: {paciente.dieta}</p>
-              <Button onClick={handleEditarPaciente} variant="contained" color="primary">Editar paciente</Button>
-              <Button onClick={handleEliminarPaciente} variant="contained" color="secondary">Eliminar paciente</Button>
-            </>
-          )}
-        </div>
-      ) : (
-        <PacienteForm onSave={handleGuardarEdicion} />
+    <>
+      {!editMode && (
+        <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Card sx={{ marginBottom: 2 }}>
+          <CardContent>
+            <Typography variant="h4" component="div" align="center" marginBottom={0} gutterBottom>
+              Habitación {numero} - Cama {cama}
+            </Typography>
+            <Typography variant="h6" align="center" gutterBottom>
+              Estado: {habitacion.estado}
+            </Typography>
+            <Typography variant="h5" component="div" align="center" gutterBottom>
+              Datos del Paciente
+            </Typography>
+            <Typography align="center">Nombre: {paciente.nombre} {paciente.apellido}</Typography>
+            <Typography align="center">DNI: {paciente.dni}</Typography>
+            <Typography align="center">Edad: {paciente.edad}</Typography>
+            <Typography align="center">Dieta: {paciente.dieta}</Typography>
+            <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
+              <Grid item>
+                <Button onClick={handleEditarPaciente} variant="contained" color="primary" endIcon={<Edit/>}>
+                  Editar paciente
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button onClick={handleEliminarPaciente} variant="outlined" endIcon={<Delete/>}>
+                  Eliminar paciente
+                </Button>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+        </Container>
       )}
-    </div>
+
+      {editMode && (
+        <Container  maxWidth="md"  sx={{ mt: 4 }}>
+        <Card>
+          <CardContent>
+            <Typography variant="h4" component="div" align="center" marginBottom={-2} gutterBottom>
+              Habitación {numero} - Cama {cama}
+            </Typography>
+            <Grid container justifyContent="center">
+              <Grid item xs={12} sm={8} md={6} lg={12}>
+                <PacienteForm paciente={paciente} onSave={handleGuardarEdicion} />
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+        </Container>
+      )}
+    </>
   );
 };
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid, Card, CardContent, Typography } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useHabitaciones } from './hooks/HabitacionesContext';
 import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
 
-const PacienteForm = ({ paciente = {}, onSave}) => { // Añadir numero y cama como props
+const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama como props
   const navigate = useNavigate();
   const location = useLocation();
   const { numero, cama } = location.state || {}; // Obtener numero y cama desde el estado de la navegación
@@ -30,9 +31,23 @@ const PacienteForm = ({ paciente = {}, onSave}) => { // Añadir numero y cama co
     event.preventDefault();
     setError('');
 
-    if (!dni || !nombre || !apellido || !edad || !dieta) {
-      setError('Todos los campos son obligatorios.');
+    //Validaciones
+    if (dni.length < 8 || dni.length > 11) {
+      setError('El DNI debe tener entre 8 y 11 caracteres.');
       return;
+    }
+
+    if (parseInt(edad) < 0 || parseInt(edad) > 120) {
+      setError('La edad debe estar entre 0 y 120 años.');
+      return;
+    }
+
+    async function validarDni(){
+      const existeDni = await api.get(`http://localhost:5000/api/pacientes/${dni}`);
+      if (existeDni.data) {
+        setError('El DNI ingresado ya existe.');
+        return;
+      }
     }
 
     const pacienteData = {
@@ -45,6 +60,7 @@ const PacienteForm = ({ paciente = {}, onSave}) => { // Añadir numero y cama co
       habitaciones: numero,
     };
 
+ 
     try {
       if (paciente && paciente.dni) {
         // Si el paciente existe, actualiza el paciente
@@ -55,6 +71,7 @@ const PacienteForm = ({ paciente = {}, onSave}) => { // Añadir numero y cama co
         }
       } else {
         // Si el paciente no existe, crea un nuevo paciente
+        validarDni();
         const response = await api.post('http://localhost:5000/api/pacientes', pacienteData);
         const pacienteDni = response.data.dni; // Obtener el DNI del paciente creado
 
@@ -66,7 +83,7 @@ const PacienteForm = ({ paciente = {}, onSave}) => { // Añadir numero y cama co
         });
 
         alert('Paciente enviado correctamente');
-        navigate(`/habitaciones/${numero}/${cama}`);  
+        navigate(`/habitaciones/${numero}/${cama}`);
         if (onSave) {
           onSave(pacienteData);
         }
@@ -80,17 +97,16 @@ const PacienteForm = ({ paciente = {}, onSave}) => { // Añadir numero y cama co
 
       obtenerEstadoHabitaciones(); // Actualiza el estado de las habitaciones
     } catch (error) {
-      setError('Error al enviar paciente. Inténtalo de nuevo.');
       console.error('Error:', error);
     }
   };
 
   return (
-    <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
-      <Grid item xs={12} sm={8} md={6} lg={4}>
+    <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '75vh' }}>
+      <Grid item xs={12} sm={8} md={6} lg={5}>
         <Card>
           <CardContent>
-            <Typography variant="h5" component="div" gutterBottom>
+            <Typography variant="h5" component="div" gutterBottom align='center'>
               {paciente && paciente.dni ? 'Editar Paciente' : 'Enviar Paciente'}
             </Typography>
             <form onSubmit={handleSubmit}>
@@ -127,7 +143,7 @@ const PacienteForm = ({ paciente = {}, onSave}) => { // Añadir numero y cama co
                   <TextField
                     variant="outlined"
                     label="Edad"
-                    type="number" 
+                    type="number"
                     value={edad}
                     onChange={(e) => setEdad(e.target.value)}
                     fullWidth
@@ -147,13 +163,14 @@ const PacienteForm = ({ paciente = {}, onSave}) => { // Añadir numero y cama co
                     <Typography color="error">{error}</Typography>
                   </Grid>
                 )}
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ textAlign: 'center' }}>
                   <Button
                     variant="contained"
                     color="primary"
                     type="submit"
-                    fullWidth
+                    endIcon={<SendIcon />}
                     disabled={!dni || !nombre || !apellido || !edad || !dieta}
+                    style={{ margin: 'auto' }} // Estilo para centrar el botón
                   >
                     {paciente && paciente.dni ? 'Guardar Cambios' : 'Enviar Paciente'}
                   </Button>
