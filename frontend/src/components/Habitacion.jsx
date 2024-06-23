@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../../backend/src/routes/api'; // Asegúrate de que la ruta a tu cliente Axios sea correcta
-import PacienteForm from './PacienteForm'; // Asegúrate de importar PacienteForm correctamente
+import api from '../../../backend/src/routes/api';
+import PacienteForm from './PacienteForm';
 import { Button } from '@mui/material';
 import { useHabitaciones } from './hooks/HabitacionesContext';
 
@@ -30,16 +30,12 @@ const Habitacion = () => {
     setEditMode(true);
   };
 
-  const handleGuardarEdicion = async (pacienteEditado) => {
+  const handleGuardarEdicion = async () => {
     try {
-      const response = await api.put(`/pacientes/${paciente.dni}`, pacienteEditado);
-      setPaciente(response.data);
       setEditMode(false);
-      alert('Paciente actualizado correctamente');
       fetchHabitacion(numero, cama); // Actualiza el estado después de la edición
     } catch (error) {
       console.error('Error al actualizar el paciente:', error);
-      alert('Error al actualizar el paciente');
     }
   };
 
@@ -76,7 +72,7 @@ const Habitacion = () => {
   return (
     <div className="container">
       <div className="header">
-        <h1>Detalles de la Habitación {numero} - Cama {cama}</h1>
+        <h1> Habitación {numero} - Cama {cama}</h1>
       </div>
       <div className="details">
         <p>Estado: {habitacion.estado}</p>
@@ -98,7 +94,7 @@ const Habitacion = () => {
           )}
         </div>
       ) : (
-        <PacienteForm numero={Number(numero)} cama={cama} />
+        <PacienteForm onSave={handleGuardarEdicion} />
       )}
     </div>
   );
