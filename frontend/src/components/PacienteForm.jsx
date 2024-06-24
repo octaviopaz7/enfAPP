@@ -42,14 +42,7 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
       return;
     }
 
-    async function validarDni(){
-      const existeDni = await api.get(`http://localhost:5000/api/pacientes/${dni}`);
-      if (existeDni.data) {
-        setError('El DNI ingresado ya existe.');
-        return;
-      }
-    }
-
+ 
     const pacienteData = {
       dni,
       nombre,
@@ -71,7 +64,6 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
         }
       } else {
         // Si el paciente no existe, crea un nuevo paciente
-        validarDni();
         const response = await api.post('http://localhost:5000/api/pacientes', pacienteData);
         const pacienteDni = response.data.dni; // Obtener el DNI del paciente creado
 
@@ -82,11 +74,7 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
           pacienteDni: pacienteDni,
         });
 
-        Swal.fire({
-          icon: 'success',
-          title: '¡Éxito!',
-          text: 'Paciente ingresado correctamente',
-        });
+        alert('Paciente enviado correctamente');
         navigate(`/habitaciones/${numero}/${cama}`);
         if (onSave) {
           onSave(pacienteData);
@@ -101,6 +89,7 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
 
       obtenerEstadoHabitaciones(); // Actualiza el estado de las habitaciones
     } catch (error) {
+      setError("El DNI ingresado ya existe!")
       console.error('Error:', error);
     }
   };
