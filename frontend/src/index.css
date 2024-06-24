@@ -111,3 +111,17 @@ button:hover {
   margin-bottom: 5px;
 }
 
+.formControl {
+  margin-bottom: 20px;
+  min-width: 200px;
+  float: right;
+}
+
+.select {
+  background-color: white;
+  border-radius: 4px;
+}
+
+.select .MuiSelect-select {
+  padding: 10px 14px;
+}
