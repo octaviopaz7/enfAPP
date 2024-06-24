@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField, Grid, Typography, Link, Container, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
+import Swal from 'sweetalert2';
+import api from '../../../backend/src/routes/api';
 
 const LoginForm = () => {
   const [usuario, setUsuario] = useState('');
@@ -16,10 +17,16 @@ const LoginForm = () => {
     try {
       const response = await api.post('/usuarios/login', { usuario, contraseña });
       console.log(response.data);
-      alert('Inicio de sesión exitoso');
-
+      
       // Guardar el nombre de usuario en el almacenamiento local
       localStorage.setItem('usuario', usuario);
+
+      // Mostrar SweetAlert2 con el nombre del usuario
+      Swal.fire({
+        icon: 'success',
+        title: `¡Bienvenido, ${usuario}!`,
+        text: 'Inicio de sesión exitoso',
+      });
 
       navigate('/pisos');
     } catch (error) {

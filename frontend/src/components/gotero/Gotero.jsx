@@ -36,13 +36,13 @@ const Gotero = () => {
       <h1>Calculadora de Goteo</h1>
       <div className="gotero-content">
         <FormGotero onCalculate={handleCalculate} />
+        {results && (
+          <div className="resultado-animacion-container">
+            <ResultadoGotero results={results} dropCount={dropCount} />
+            <DripAnimacion dropsPerMinute={results.dropsPerMinute} onDropCountChange={handleDropCountChange} />
+          </div>
+        )}
       </div>
-      {results && (
-        <div className="resultado-animacion-container">
-          <ResultadoGotero results={results} dropCount={dropCount} />
-          <DripAnimacion dropsPerMinute={results.dropsPerMinute} onDropCountChange={handleDropCountChange} />
-        </div>
-      )}
     </div>
   );
 };

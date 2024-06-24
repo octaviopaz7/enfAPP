@@ -3,7 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../../backend/src/routes/api';
 import PacienteForm from './PacienteForm';
 import { Button, Container, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Delete , Edit  } from '@mui/icons-material';
+import { Delete, Edit } from '@mui/icons-material';
+import Swal from 'sweetalert2';
 import { useHabitaciones } from './hooks/HabitacionesContext';
 
 const Habitacion = () => {
@@ -17,13 +18,37 @@ const Habitacion = () => {
 
   const handleEliminarPaciente = async () => {
     try {
-      await api.delete(`/habitaciones/${numero}/${cama}`);
-      alert('Paciente y habitación eliminados');
-      obtenerEstadoHabitaciones(); // Actualiza el estado de las habitaciones
-      navigate('/pisos');
+      const result = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción no se puede deshacer',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, borrar',
+        cancelButtonText: 'Cancelar'
+      });
+
+      if (result.isConfirmed) {
+        await api.delete(`/habitaciones/${numero}/${cama}`);
+        Swal.fire({
+          title: '¡Eliminado!',
+          text: 'Paciente y habitación eliminados',
+          icon: 'success',
+          confirmButtonText: 'Aceptar'
+        });
+
+        obtenerEstadoHabitaciones(); // Actualiza el estado de las habitaciones
+        navigate('/pisos');
+      }
     } catch (error) {
       console.error('Error al eliminar el paciente y la habitación:', error);
-      alert('Error al eliminar el paciente y la habitación');
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al eliminar el paciente y la habitación',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 
@@ -35,8 +60,20 @@ const Habitacion = () => {
     try {
       setEditMode(false);
       fetchHabitacion(numero, cama); // Actualiza el estado después de la edición
+      Swal.fire({
+        title: '¡Actualizado!',
+        text: 'Los datos del paciente han sido actualizados',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+      });
     } catch (error) {
       console.error('Error al actualizar el paciente:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al actualizar el paciente',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     }
   };
 
@@ -51,6 +88,12 @@ const Habitacion = () => {
       }
     } catch (error) {
       console.error('Error al obtener la habitación con paciente:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Error al obtener la habitación con paciente',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
     } finally {
       setLoading(false);
     }
@@ -74,52 +117,52 @@ const Habitacion = () => {
     <>
       {!editMode && (
         <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <Card sx={{ marginBottom: 2 }}>
-          <CardContent>
-            <Typography variant="h4" component="div" align="center" marginBottom={0} gutterBottom>
-              Habitación {numero} - Cama {cama}
-            </Typography>
-            <Typography variant="h6" align="center" gutterBottom>
-              Estado: {habitacion.estado}
-            </Typography>
-            <Typography variant="h5" component="div" align="center" gutterBottom>
-              Datos del Paciente
-            </Typography>
-            <Typography align="center">Nombre: {paciente.nombre} {paciente.apellido}</Typography>
-            <Typography align="center">DNI: {paciente.dni}</Typography>
-            <Typography align="center">Edad: {paciente.edad}</Typography>
-            <Typography align="center">Dieta: {paciente.dieta}</Typography>
-            <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
-              <Grid item>
-                <Button onClick={handleEditarPaciente} variant="contained" color="primary" endIcon={<Edit/>}>
-                  Editar paciente
-                </Button>
+          <Card sx={{ marginBottom: 2 }}>
+            <CardContent>
+              <Typography variant="h4" component="div" align="center" marginBottom={0} gutterBottom>
+                Habitación {numero} - Cama {cama}
+              </Typography>
+              <Typography variant="h6" align="center" gutterBottom>
+                Estado: {habitacion.estado}
+              </Typography>
+              <Typography variant="h5" component="div" align="center" gutterBottom>
+                Datos del Paciente
+              </Typography>
+              <Typography align="center">Nombre: {paciente.nombre} {paciente.apellido}</Typography>
+              <Typography align="center">DNI: {paciente.dni}</Typography>
+              <Typography align="center">Edad: {paciente.edad}</Typography>
+              <Typography align="center">Dieta: {paciente.dieta}</Typography>
+              <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
+                <Grid item>
+                  <Button onClick={handleEditarPaciente} variant="contained" color="primary" endIcon={<Edit />}>
+                    Editar paciente
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button onClick={handleEliminarPaciente} variant="outlined" endIcon={<Delete />}>
+                    Eliminar paciente
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Button onClick={handleEliminarPaciente} variant="outlined" endIcon={<Delete/>}>
-                  Eliminar paciente
-                </Button>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
         </Container>
       )}
 
       {editMode && (
-        <Container  maxWidth="md"  sx={{ mt: 4 }}>
-        <Card>
-          <CardContent>
-            <Typography variant="h4" component="div" align="center" marginBottom={-2} gutterBottom>
-              Habitación {numero} - Cama {cama}
-            </Typography>
-            <Grid container justifyContent="center">
-              <Grid item xs={12} sm={8} md={6} lg={12}>
-                <PacienteForm paciente={paciente} onSave={handleGuardarEdicion} />
+        <Container maxWidth="md" sx={{ mt: 4 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h4" component="div" align="center" marginBottom={-2} gutterBottom>
+                Habitación {numero} - Cama {cama}
+              </Typography>
+              <Grid container justifyContent="center">
+                <Grid item xs={12} sm={8} md={6} lg={12}>
+                  <PacienteForm paciente={paciente} onSave={handleGuardarEdicion} />
+                </Grid>
               </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
         </Container>
       )}
     </>
