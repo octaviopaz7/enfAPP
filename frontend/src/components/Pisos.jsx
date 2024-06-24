@@ -1,11 +1,13 @@
-import React from 'react';
-import { Grid, Button, Container } from '@mui/material';
+import React, { useState } from 'react';
+import { Grid, Button, Container, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useHabitaciones } from '../components/hooks/HabitacionesContext';
 
 const Pisos = () => {
   const navigate = useNavigate();
   const { estadoHabitaciones } = useHabitaciones();
+
+  const [pisoSeleccionado, setPisoSeleccionado] = useState(300);
 
   const verificarOcupacion = (numero, cama) => {
     const habitacion = estadoHabitaciones.find(h => h.numero === numero && h.cama === cama);
@@ -20,8 +22,20 @@ const Pisos = () => {
     }
   };
 
+  const handlePisoChange = (event) => {
+    setPisoSeleccionado(event.target.value);
+  };
+
   const renderHabitaciones = () => {
-    return [301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314].map(numero => {
+    const habitacionesPorPiso = {
+      100: [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114],
+      200: [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214],
+      300: [301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314],
+      400: [401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414],
+      500: [501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511, 512, 513, 514]
+    };
+
+    return habitacionesPorPiso[pisoSeleccionado].map(numero => {
       const habitacionA = estadoHabitaciones.find(h => h.numero === numero && h.cama === 'A');
       const habitacionB = estadoHabitaciones.find(h => h.numero === numero && h.cama === 'B');
 
@@ -60,6 +74,23 @@ const Pisos = () => {
   return (
     <React.Fragment>
       <Container maxWidth="lg" style={{ marginTop: '20px' }}>
+        <FormControl variant="outlined" className="formControl">
+          <InputLabel id="select-piso-label">Seleccionar Piso</InputLabel>
+          <Select
+            labelId="select-piso-label"
+            id="select-piso"
+            value={pisoSeleccionado}
+            onChange={handlePisoChange}
+            label="Seleccionar Piso"
+            className="select"
+          >
+            <MenuItem value={100}>Piso 100</MenuItem>
+            <MenuItem value={200}>Piso 200</MenuItem>
+            <MenuItem value={300}>Piso 300</MenuItem>
+            <MenuItem value={400}>Piso 400</MenuItem>
+            <MenuItem value={500}>Piso 500</MenuItem>
+          </Select>
+        </FormControl>
         <Grid container spacing={3}>
           {renderHabitaciones()}
         </Grid>
@@ -69,5 +100,3 @@ const Pisos = () => {
 };
 
 export default Pisos;
-
-
