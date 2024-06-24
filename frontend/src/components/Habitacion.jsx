@@ -9,10 +9,12 @@ import Swal from 'sweetalert2';
 
 const Habitacion = () => {
   const navigate = useNavigate();
-  const { numero, cama } = useParams(); // Obtener numero y cama desde los parámetros de la URL
+  const { numero, cama } = useParams();
   const [habitacion, setHabitacion] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [paciente, setPaciente] = useState(null);
+  const [paciente, setPaciente] = useState(null); // Aquí se almacenará el objeto completo del paciente
+  const [nombrePaciente, setNombrePaciente] = useState(''); // Nombre del paciente
+  const [apellidoPaciente, setApellidoPaciente] = useState(''); // Apellido del paciente
   const [editMode, setEditMode] = useState(false);
   const { obtenerEstadoHabitaciones } = useHabitaciones();
 
@@ -38,7 +40,7 @@ const Habitacion = () => {
           confirmButtonText: 'Aceptar'
         });
 
-        obtenerEstadoHabitaciones(); // Actualiza el estado de las habitaciones
+        obtenerEstadoHabitaciones();
         navigate('/pisos');
       }
     } catch (error) {
@@ -59,7 +61,7 @@ const Habitacion = () => {
   const handleGuardarEdicion = async () => {
     try {
       setEditMode(false);
-      fetchHabitacion(numero, cama); // Actualiza el estado después de la edición
+      fetchHabitacion(numero, cama);
       Swal.fire({
         title: '¡Actualizado!',
         text: 'Los datos del paciente han sido actualizados',
@@ -83,8 +85,13 @@ const Habitacion = () => {
       setHabitacion(response.data);
 
       if (response.data.estado === 'ocupada') {
+        // Obtener datos completos del paciente
         const pacienteResponse = await api.get(`/pacientes/${response.data.pacienteDni}`);
         setPaciente(pacienteResponse.data);
+
+        // Extraer nombre y apellido del paciente
+        setNombrePaciente(pacienteResponse.data.nombre);
+        setApellidoPaciente(pacienteResponse.data.apellido);
       }
     } catch (error) {
       console.error('Error al obtener la habitación con paciente:', error);
@@ -98,6 +105,26 @@ const Habitacion = () => {
       fetchHabitacion(numero, cama);
     }
   }, [numero, cama]);
+
+  useEffect(() => {
+    if (habitacion && habitacion.pacienteDni) {
+      fetchNombrePaciente(habitacion.pacienteDni);
+    }
+  }, [habitacion]);
+
+  const fetchNombrePaciente = async (dni) => {
+    try {
+      const response = await api.get(`/pacientes/nombre/${dni}`);
+      setNombrePaciente(response.data.nombre);
+      setApellidoPaciente(response.data.apellido);
+    } catch (error) {
+      console.error('Error al obtener el nombre del paciente:', error);
+    }
+  };
+
+  const handleVerParametros = () => {
+    navigate(`/habitacion/${numero}/${cama}/parametros`);
+  };
 
   if (loading) {
     return <p>Cargando datos de la habitación...</p>;
@@ -122,10 +149,10 @@ const Habitacion = () => {
               <Typography variant="h5" component="div" align="center" gutterBottom>
                 Datos del Paciente
               </Typography>
-              <Typography align="center">Nombre: {paciente.nombre} {paciente.apellido}</Typography>
-              <Typography align="center">DNI: {paciente.dni}</Typography>
-              <Typography align="center">Edad: {paciente.edad}</Typography>
-              <Typography align="center">Dieta: {paciente.dieta}</Typography>
+              <Typography align="center">Nombre: {nombrePaciente} {apellidoPaciente}</Typography>
+              <Typography align="center">DNI: {habitacion.pacienteDni}</Typography>
+              <Typography align="center">Edad: {paciente ? paciente.edad : 'Cargando...'}</Typography>
+              <Typography align="center">Dieta: {paciente ? paciente.dieta : 'Cargando...'}</Typography>
               <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
                 <Grid item>
                   <Button onClick={handleEditarPaciente} variant="contained" color="primary" endIcon={<Edit />}>
@@ -135,6 +162,11 @@ const Habitacion = () => {
                 <Grid item>
                   <Button onClick={handleEliminarPaciente} variant="outlined" endIcon={<Delete />}>
                     Eliminar paciente
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button onClick={handleVerParametros} variant="contained" color="primary">
+                    Ver Parámetros
                   </Button>
                 </Grid>
               </Grid>

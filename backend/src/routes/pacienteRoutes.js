@@ -79,6 +79,19 @@ router.put('/:dni', async (req, res) => {
   }
 });
 
+router.get('/paciente/nombre/:dni', async (req, res) => {
+  try {
+    const paciente = await Paciente.findOne({ dni: req.params.dni }, 'nombre apellido');
+    if (paciente) {
+      res.json(paciente);
+    } else {
+      res.status(404).json({ message: 'Paciente no encontrado' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 
 module.exports = router;

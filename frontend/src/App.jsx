@@ -10,6 +10,8 @@ import NavBar from './components/NavBar';
 import CambiarContraseña from './components/CambiarContraseña';
 import SearchMedication from './components/SearchMedication';
 import Gotero from './components/gotero/Gotero';
+import Parametros from './components/Parametros';
+
 
 const App = () => {
   const location = useLocation();
@@ -26,6 +28,7 @@ const App = () => {
         <Route path="/pisos" element={<Piso />} />
         <Route path="/paciente-form" element={<PacienteForm />} />
         <Route path="/habitaciones/:numero/:cama" element={<Habitacion />} />
+        <Route path="/habitacion/:numero/:cama/parametros" element={<Parametros />} />
         <Route path="/cambiar-contraseña" element={<CambiarContraseña />} />
         <Route path="/calculadora-de-goteo" element={<Gotero />} />
       </Routes>

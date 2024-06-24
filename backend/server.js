@@ -7,6 +7,7 @@ const medicamentosRoutes = require('./src/routes/medicamentos');
 const habitacionesRoutes = require('./src/routes/habitaciones');
 const usuariosRoutes = require('./src/routes/usuarios');
 const pacientesRoutes = require('./src/routes/pacienteRoutes');
+const parametrosSchema =require('./src/routes/parametros')
 
 dotenv.config({ path: path.resolve(__dirname, './.env') });
 
@@ -23,6 +24,7 @@ app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/medicamentos', medicamentosRoutes);
 app.use('/api/habitaciones', habitacionesRoutes);
 app.use('/api/pacientes', pacientesRoutes);
+app.use('/api/parametros',parametrosSchema)
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
