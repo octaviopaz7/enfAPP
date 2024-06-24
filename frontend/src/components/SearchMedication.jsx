@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Typography, Grid, CircularProgress } from '@mui/material'; // Importa los componentes de Material-UI necesarios
 import SearchMedicationCard from './SearchMedicationCard';
 import api from '../../../backend/src/routes/api'; // Asegúrate de importar correctamente la instancia de Axios
+import Swal from 'sweetalert2';
 
 const SearchMedication = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const query = queryParams.get('query');
 
@@ -20,7 +22,22 @@ const SearchMedication = () => {
       try {
         const response = await api.get(`/medicamentos/search?nombre=${query}`);
         const data = await response.data; // Asegúrate de obtener correctamente los datos de la respuesta
-        setMedications(data);
+
+        const uniqueMedications = data.filter(
+          (medication, index, self) =>
+            index === self.findIndex((m) => m.nombre === medication.nombre)
+        );
+
+        setMedications(uniqueMedications);
+
+        if (uniqueMedications.length === 0) {
+          Swal.fire({
+            title: 'No encontrado',
+            text: 'No se encontró ningún medicamento con ese nombre.',
+            icon: 'warning',
+            confirmButtonText: 'Aceptar'
+          });
+        }
       } catch (error) {
         console.error('Error al obtener medicamentos:', error.message);
         setError('Error al obtener medicamentos. Inténtalo de nuevo más tarde.');
@@ -33,6 +50,20 @@ const SearchMedication = () => {
       fetchMedications();
     }
   }, [query]);
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`?query=${event.target.value}`);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keypress', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keypress', handleKeyPress);
+    };
+  }, []);
 
   const renderResults = () => {
     if (loading) {

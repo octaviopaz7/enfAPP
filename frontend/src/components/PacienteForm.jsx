@@ -82,7 +82,11 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
           pacienteDni: pacienteDni,
         });
 
-        alert('Paciente enviado correctamente');
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Paciente ingresado correctamente',
+        });
         navigate(`/habitaciones/${numero}/${cama}`);
         if (onSave) {
           onSave(pacienteData);
