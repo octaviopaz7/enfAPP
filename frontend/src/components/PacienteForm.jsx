@@ -5,6 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useHabitaciones } from './hooks/HabitacionesContext';
 import Swal from 'sweetalert2';
 import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
+import Swal from 'sweetalert2';
+
 
 const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama como props
   const navigate = useNavigate();
