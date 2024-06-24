@@ -3,6 +3,7 @@ import { TextField, Button, Grid, Card, CardContent, Typography } from '@mui/mat
 import SendIcon from '@mui/icons-material/Send';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useHabitaciones } from './hooks/HabitacionesContext';
+import Swal from 'sweetalert2';
 import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
 
 const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama como props
@@ -58,7 +59,6 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
       if (paciente && paciente.dni) {
         // Si el paciente existe, actualiza el paciente
         await api.put(`http://localhost:5000/api/pacientes/${paciente.dni}`, pacienteData);
-        alert('Paciente actualizado correctamente');
         if (onSave) {
           onSave(pacienteData);
         }
@@ -74,7 +74,11 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
           pacienteDni: pacienteDni,
         });
 
-        alert('Paciente enviado correctamente');
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Paciente ingresado correctamente',
+        });
         navigate(`/habitaciones/${numero}/${cama}`);
         if (onSave) {
           onSave(pacienteData);
