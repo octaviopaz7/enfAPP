@@ -90,7 +90,6 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
       obtenerEstadoHabitaciones(); // Actualiza el estado de las habitaciones
     } catch (error) {
       setError("El DNI ingresado ya existe!")
-      console.error('Error:', error);
     }
   };
 
