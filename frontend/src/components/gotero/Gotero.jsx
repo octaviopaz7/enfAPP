@@ -3,11 +3,12 @@ import FormGotero from './Formgotero';
 import ResultadoGotero from './ResultadoGotero';
 import DripAnimacion from './DripAnimacion';
 import './Gotero.css';
-import { Container, Card, CardContent, Typography } from '@mui/material';
+import { Container, Card, CardContent, Typography, Button } from '@mui/material';
 
 const Gotero = () => {
   const [results, setResults] = useState(null);
   const [dropCount, setDropCount] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleCalculate = (data) => {
     let volumeInMl = data.volumeUnit === 'liters' ? data.volume * 1000 : data.volume;
@@ -26,10 +27,16 @@ const Gotero = () => {
 
     // Reset drop count
     setDropCount(0);
+    // Start animation
+    setIsAnimating(true);
   };
 
   const handleDropCountChange = () => {
     setDropCount((prevCount) => prevCount + 1);
+  };
+
+  const handleStopAnimation = () => {
+    setIsAnimating(false);
   };
 
   return (
@@ -40,7 +47,16 @@ const Gotero = () => {
         {results && (
           <div className="resultado-animacion-container">
             <ResultadoGotero results={results} dropCount={dropCount} />
-            <DripAnimacion dropsPerMinute={results.dropsPerMinute} onDropCountChange={handleDropCountChange} />
+            <DripAnimacion 
+              dropsPerMinute={results.dropsPerMinute} 
+              onDropCountChange={handleDropCountChange} 
+              isAnimating={isAnimating}
+            />
+            {isAnimating && (
+              <Button variant="contained" color="secondary" onClick={handleStopAnimation}>
+                Detener Animación
+              </Button>
+            )}
           </div>
         )}
       </div>

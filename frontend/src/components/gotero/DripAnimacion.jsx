@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import './Gotero.css';
 
-const DripAnimacion = ({ dropsPerMinute, onDropCountChange }) => {
+const DripAnimacion = ({ dropsPerMinute, onDropCountChange, isAnimating }) => {
   const dropRef = useRef(null);
-  const animationDuration = 60 / dropsPerMinute; // Calcula la duración de la animación
+  const animationDuration = 60 / dropsPerMinute; // Calculate animation duration
 
   useEffect(() => {
     const handleAnimationIteration = () => {
@@ -11,17 +11,23 @@ const DripAnimacion = ({ dropsPerMinute, onDropCountChange }) => {
     };
 
     if (dropRef.current) {
-      dropRef.current.style.animation = 'none';
-      dropRef.current.offsetHeight; // Trigger reflow
-      dropRef.current.style.animation = `drip ${animationDuration}s infinite`;
+      if (isAnimating) {
+        dropRef.current.style.animation = 'none';
+        dropRef.current.offsetHeight; // Trigger reflow
+        dropRef.current.style.animation = `drip ${animationDuration}s infinite`;
+        dropRef.current.addEventListener('animationiteration', handleAnimationIteration);
+      } else {
+        dropRef.current.style.animation = 'none';
+        dropRef.current.removeEventListener('animationiteration', handleAnimationIteration);
+      }
     }
 
-    dropRef.current.addEventListener('animationiteration', handleAnimationIteration);
-
     return () => {
-      dropRef.current.removeEventListener('animationiteration', handleAnimationIteration);
+      if (dropRef.current) {
+        dropRef.current.removeEventListener('animationiteration', handleAnimationIteration);
+      }
     };
-  }, [dropsPerMinute, animationDuration, onDropCountChange]);
+  }, [dropsPerMinute, animationDuration, onDropCountChange, isAnimating]);
 
   return (
     <div className="drip-animacion-background">
