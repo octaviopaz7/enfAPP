@@ -62,10 +62,10 @@ const FormRegistro = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semi-transparente blanco
+          backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+          boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', 
           padding: '20px',
-          borderRadius: '8px',
-          boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', // Sombra suave
+          borderRadius: '8px'
         }}
       >
         <Typography component="h1" variant="h5">

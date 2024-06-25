@@ -18,18 +18,29 @@ const App = () => {
   const isAuthRoute = location.pathname === '/login' || location.pathname === '/register';
 
   useEffect(() => {
-    console.log(location.pathname); // Verifica la ruta actual en la consola
-    if (location.pathname === '/login') {
-      document.body.classList.add('login-bg');
-      document.body.classList.remove('registro-bg');
-    } else if (location.pathname === '/register' || location.pathname === '/cambiar-contrase%C3%B1a') {
-      document.body.classList.add('registro-bg');
-      document.body.classList.remove('login-bg');
-    } else {
-      document.body.classList.remove('login-bg', 'registro-bg');
+    console.log(location.pathname);
+    switch (true) {
+      case location.pathname.startsWith('/habitaciones/') || location.pathname === '/paciente-form' :
+        document.body.classList.add('habitaciones-bg');
+        document.body.classList.remove('login-bg', 'registro-bg', 'pisos-bg');
+        break;
+      case location.pathname === '/login':
+        document.body.classList.add('login-bg');
+        document.body.classList.remove('registro-bg', 'pisos-bg', 'habitaciones-bg');
+        break;
+      case location.pathname === '/register' || location.pathname === '/cambiar-contrase%C3%B1a':
+        document.body.classList.add('registro-bg');
+        document.body.classList.remove('login-bg', 'pisos-bg', 'habitaciones-bg');
+        break;
+      case location.pathname === '/pisos':
+        document.body.classList.add('pisos-bg');
+        document.body.classList.remove('login-bg', 'registro-bg', 'habitaciones-bg');
+        break;
+      default:
+        document.body.classList.remove('login-bg', 'registro-bg', 'pisos-bg', 'habitaciones-bg');
+        break;
     }
   }, [location.pathname]);
-
 
   return (
     <HabitacionesProvider>

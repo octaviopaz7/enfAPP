@@ -11,6 +11,19 @@ body.registro-bg {
   background-attachment: fixed;
 }
 
+body.pisos-bg {
+  background: url('./assets/imagenes/Pisos.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+body.habitaciones-bg {
+  background: url('./assets/imagenes/Habitacion.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+
 /* Reset de estilos básico */
 * {
   margin: 0;

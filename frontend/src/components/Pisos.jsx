@@ -44,7 +44,13 @@ const Pisos = () => {
 
       return (
         <Grid item key={numero} xs={12} sm={6} md={4} lg={3} xl={2}>
-          <Container maxWidth="sm" style={{ backgroundColor: '#f0f0f0', padding: '10px', marginBottom: '10px' }}>
+          <Container maxWidth="sm"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              borderRadius: '5px',
+              padding: '10px',
+              marginBottom: '10px'
+            }}>
             <Grid container spacing={3} alignItems="center">
               <Grid item xs={6}>
                 <Button

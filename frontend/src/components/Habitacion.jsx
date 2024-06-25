@@ -137,59 +137,73 @@ const Habitacion = () => {
   return (
     <>
       {!editMode && (
-        <Container maxWidth="sm" sx={{ mt: 4 }}>
-          <Card sx={{ marginBottom: 2 }}>
-            <CardContent>
-              <Typography variant="h4" component="div" align="center" marginBottom={0} gutterBottom>
-                Habitación {numero} - Cama {cama}
-              </Typography>
-              <Typography variant="h6" align="center" gutterBottom>
-                Estado: {habitacion.estado}
-              </Typography>
-              <Typography variant="h5" component="div" align="center" gutterBottom>
-                Datos del Paciente
-              </Typography>
-              <Typography align="center">Nombre: {nombrePaciente} {apellidoPaciente}</Typography>
-              <Typography align="center">DNI: {habitacion.pacienteDni}</Typography>
-              <Typography align="center">Edad: {paciente ? paciente.edad : 'Cargando...'}</Typography>
-              <Typography align="center">Dieta: {paciente ? paciente.dieta : 'Cargando...'}</Typography>
-              <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
-                <Grid item>
-                  <Button onClick={handleEditarPaciente} variant="contained" color="primary" endIcon={<Edit />}>
-                    Editar paciente
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button onClick={handleEliminarPaciente} variant="outlined" endIcon={<Delete />}>
-                    Eliminar paciente
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button onClick={handleVerParametros} variant="contained" color="primary">
-                    Ver Parámetros
-                  </Button>
-                </Grid>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '70vh',
+        }}>
+          <CardContent sx={{
+            maxWidth: 700,
+            borderRadius: '5px',
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)',
+            padding: '20px', // Añadir relleno
+          }}>
+            <Typography variant="h4" component="div" align="center" marginBottom={2} gutterBottom>
+              Habitación {numero} - Cama {cama}
+            </Typography>
+            <Typography variant="h6" align="center" gutterBottom>
+              Estado: {habitacion.estado}
+            </Typography>
+            <Typography variant="h5" component="div" align="center" gutterBottom>
+              Datos del Paciente
+            </Typography>
+            <Typography align="center">Nombre: {nombrePaciente} {apellidoPaciente}</Typography>
+            <Typography align="center">DNI: {habitacion.pacienteDni}</Typography>
+            <Typography align="center">Edad: {paciente ? paciente.edad : 'Cargando...'}</Typography>
+            <Typography align="center">Dieta: {paciente ? paciente.dieta : 'Cargando...'}</Typography>
+            <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
+              <Grid item>
+                <Button onClick={handleVerParametros} variant="contained" color="primary">
+                  Ver Parámetros
+                </Button>
               </Grid>
-            </CardContent>
-          </Card>
-        </Container>
+              <Grid item>
+                <Button onClick={handleEditarPaciente} variant="contained" color="primary" endIcon={<Edit />}>
+                  Editar paciente
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button onClick={handleEliminarPaciente} variant="contained" endIcon={<Delete />}>
+                  Eliminar paciente
+                </Button>
+              </Grid>
+
+            </Grid>
+          </CardContent>
+        </div>
+
       )}
 
       {editMode && (
-        <Container maxWidth="md" sx={{ mt: 4 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h4" component="div" align="center" marginBottom={-2} gutterBottom>
-                Habitación {numero} - Cama {cama}
-              </Typography>
-              <Grid container justifyContent="center">
-                <Grid item xs={12} sm={8} md={6} lg={12}>
-                  <PacienteForm paciente={paciente} onSave={handleGuardarEdicion} />
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Container>
+        <CardContent>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <Typography
+              variant="h4"
+              component="div"
+              align="center"
+              style={{
+                maxWidth: 'fit-content',
+                padding: '8px 16px',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: 4,
+              }}>
+              Habitación {numero} - Cama {cama}
+            </Typography>
+          </div>
+          <PacienteForm paciente={paciente} onSave={handleGuardarEdicion} />
+        </CardContent>
       )}
     </>
   );
