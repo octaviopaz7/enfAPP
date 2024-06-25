@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Typography, Grid, CircularProgress } from '@mui/material'; // Importa los componentes de Material-UI necesarios
+import { Box, Typography, Grid, CircularProgress, Container } from '@mui/material'; // Importa los componentes de Material-UI necesarios
 import SearchMedicationCard from './SearchMedicationCard';
 import api from '../../../backend/src/routes/api'; // Asegúrate de importar correctamente la instancia de Axios
 import Swal from 'sweetalert2';
@@ -86,15 +86,13 @@ const SearchMedication = () => {
 
     if (medications.length > 0) {
       return (
-        <Box>
-          <Grid container spacing={3} justifyContent="center">
-            {medications.map((medication, index) => (
-              <Grid item key={index} xs={12} sm={6} md={4}>
-                <SearchMedicationCard medication={medication} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+        <Container sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+          {medications.map((medication, index) => (
+            <Grid key={index} item xs={12} sm={6} md={4} lg={3} style={{ marginBottom: '20px' }}>
+              <SearchMedicationCard medication={medication} />
+            </Grid>
+          ))}
+        </Container>
       );
     }
   };

@@ -114,11 +114,10 @@ const Habitacion = () => {
 
   const fetchNombrePaciente = async (dni) => {
     try {
-      const response = await api.get(`/pacientes/nombre/${dni}`);
+      const response = await api.get(`/paciente/${nombre}/${dni}`);
       setNombrePaciente(response.data.nombre);
       setApellidoPaciente(response.data.apellido);
     } catch (error) {
-      console.error('Error al obtener el nombre del paciente:', error);
     }
   };
 
@@ -170,12 +169,12 @@ const Habitacion = () => {
                 </Button>
               </Grid>
               <Grid item>
-                <Button onClick={handleEditarPaciente} variant="contained" color="primary" endIcon={<Edit />}>
+                <Button onClick={handleEditarPaciente} variant="contained" style={{ backgroundColor: '#4CAF50', color: 'white', borderColor: '#4CAF50' }} endIcon={<Edit />}>
                   Editar paciente
                 </Button>
               </Grid>
               <Grid item>
-                <Button onClick={handleEliminarPaciente} variant="contained" endIcon={<Delete />}>
+                <Button onClick={handleEliminarPaciente} variant="contained" style={{ backgroundColor: '#F44336', color: 'white', borderColor: '#F44336' }} endIcon={<Delete />}>
                   Eliminar paciente
                 </Button>
               </Grid>

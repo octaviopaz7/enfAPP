@@ -23,6 +23,24 @@ body.habitaciones-bg {
   background-attachment: fixed;
 }
 
+body.gotero-bg {
+  background: url('./assets/imagenes/Gotero.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+body.parametros-bg {
+  background: url('./assets/imagenes/Parametros.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+body.medicamentos-bg {
+  background: url('./assets/imagenes/Medicamentos.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
 
 /* Reset de estilos básico */
 * {

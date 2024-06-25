@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';  // Importa useNavigate
 import api from '../../../backend/src/routes/api';
 import { Container, Box, Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TextField, Button } from '@mui/material';
+import Swal from 'sweetalert2';
 
 const Parametros = () => {
   const { numero, cama } = useParams();
@@ -42,7 +43,6 @@ const Parametros = () => {
           console.error('No se encontró el DNI del paciente en la habitación:', numero, cama);
         }
       } catch (error) {
-        console.error('Error al obtener los parámetros o el paciente:', error);
       }
     };
 
@@ -70,6 +70,12 @@ const Parametros = () => {
       setApellidoPaciente(pacienteResponse.data.apellido);
 
       setParametros(response.data); // Actualiza el estado con los datos guardados
+      
+      Swal.fire({
+        icon: 'success',
+        title: '¡Éxito!',
+        text: `Los parametros fueron guardados`,
+      });
 
       // Redirige a la habitación después de guardar
       navigate(`/habitaciones/${numero}/${cama}`);
@@ -125,9 +131,14 @@ const Parametros = () => {
   }
 
   return (
-    <Container maxWidth="lg">
-      <Box mt={4}>
-        <Paper elevation={3}>
+        <Paper elevation={2} style={{
+          maxWidth: 1200,
+          maxHeight: 1060,
+          padding: 20,
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 1)',
+          margin: 'auto', marginTop: 50
+        }}>
           <Box p={3}>
             <Typography variant="h4" align="center" gutterBottom>
               Parámetros Clínicos - Habitación {numero} - Cama {cama}
@@ -139,18 +150,18 @@ const Parametros = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Parámetros Clínicos</TableCell>
-                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Valor Referencia Mín.</TableCell>
-                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Valor Referencia Máx.</TableCell>
-                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Valor Tomado</TableCell>
-                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Unidades</TableCell>
-                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Clasificación</TableCell>
+                    <TableCell style={{ fontWeight: 'bold'  }}>Parámetros Clínicos</TableCell>
+                    <TableCell style={{ fontWeight: 'bold' }}>Valor Referencia Mín.</TableCell>
+                    <TableCell style={{ fontWeight: 'bold' }}>Valor Referencia Máx.</TableCell>
+                    <TableCell style={{ fontWeight: 'bold' }}>Valor Tomado</TableCell>
+                    <TableCell style={{ fontWeight: 'bold' }}>Unidades</TableCell>
+                    <TableCell style={{ fontWeight: 'bold' }}>Clasificación</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {['pas', 'pad', 'fc', 'fr', 'temp', 'peso', 'talla', 'spo2', 'glucometria', 'HemoglucotestPreprandial', 'HemoglucotestPostprandial'].map(parametro => (
-                    <TableRow key={parametro}>
-                      <TableCell style={{ backgroundColor: '#f8f8f8' }}>{getParametroName(parametro)}</TableCell>
+                    <TableRow key={parametro} >
+                      <TableCell >{getParametroName(parametro)}</TableCell>
                       <TableCell>{getValorReferenciaMin(parametro)}</TableCell>
                       <TableCell>{getValorReferenciaMax(parametro)}</TableCell>
                       <TableCell>
@@ -176,8 +187,6 @@ const Parametros = () => {
             </Box>
           </Box>
         </Paper>
-      </Box>
-    </Container>
   );
 };
 

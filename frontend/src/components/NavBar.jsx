@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Menu, MenuItem, Box } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Menu, MenuItem, Box, Button } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -154,12 +154,18 @@ const NavBar = () => {
             />
           </Search>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography
-              variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, cursor: 'pointer' }}
+            <Button
+              variant="text"
+              color="inherit"
               onClick={handleGoteoClick}
-            >
+              sx={{
+                backgroundColor: '#ae0505',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 22, 22, 0.928)',
+                },
+              }}>
               Calculadora de Goteo
-            </Typography>
+            </Button>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography
