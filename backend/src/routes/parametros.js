@@ -1,8 +1,8 @@
-// src/routes/parametros.js
 const express = require('express');
 const router = express.Router();
 const parametrosSchema = require('../models/parametros');
 
+// GET para obtener parámetros por DNI
 router.get('/:dni', async (req, res) => {
   try {
     const parametros = await parametrosSchema.findOne({ dniPaciente: req.params.dni });
@@ -16,25 +16,26 @@ router.get('/:dni', async (req, res) => {
   }
 });
 
-router.put('/', async (req, res) => {
-  const { dniPaciente, ...parametros } = req.body;
 
-  try {
-    const parametrosExistentes = await parametrosSchema.findOne({ dniPaciente });
-
-    if (parametrosExistentes) {
-      Object.assign(parametrosExistentes, parametros);
-      await parametrosExistentes.save();
-      return res.json(parametrosExistentes);
-    } else {
-      const nuevosParametros = new ParametrosClinicos(req.body);
-      await nuevosParametros.save();
-      res.json(nuevosParametros);
+// POST para crear nuevos parámetros o actualizar si existe el dniPaciente
+router.post('/', async (req, res) => {
+    const { dniPaciente, ...parametros } = req.body;
+  
+    try {
+      let parametrosExistentes = await parametrosSchema.findOne({ dniPaciente });
+  
+      if (parametrosExistentes) {
+        parametrosExistentes = await parametrosSchema.findOneAndUpdate({ dniPaciente }, parametros, { new: true });
+        return res.json(parametrosExistentes);
+      } else {
+        const nuevosParametros = new parametrosSchema({ dniPaciente, ...parametros });
+        await nuevosParametros.save();
+        res.status(201).json(nuevosParametros);
+      }
+    } catch (err) {
+      console.error('Error en POST /', err);
+      res.status(500).json({ message: err.message });
     }
-  } catch (err) {
-    console.error('Error en PUT /parametros:', err);
-    res.status(500).json({ message: err.message });
-  }
-});
+  });
 
 module.exports = router;

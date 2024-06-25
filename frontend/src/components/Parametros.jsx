@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Container,Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, TextField, Box, Button } from '@mui/material';
+import { useParams, useNavigate } from 'react-router-dom';  // Importa useNavigate
+import api from '../../../backend/src/routes/api';
+import { Container, Box, Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TextField, Button } from '@mui/material';
 
 const Parametros = () => {
   const { numero, cama } = useParams();
+  const navigate = useNavigate(); // Inicializa useNavigate
   const [parametros, setParametros] = useState({
     pas: '',
     pad: '',
@@ -18,42 +19,64 @@ const Parametros = () => {
     HemoglucotestPreprandial: '',
     HemoglucotestPostprandial: ''
   });
+  const [dniPaciente, setDniPaciente] = useState('');
   const [nombrePaciente, setNombrePaciente] = useState('');
   const [apellidoPaciente, setApellidoPaciente] = useState('');
 
   useEffect(() => {
     const fetchParametros = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/parametros/${numero}`);
-        setParametros(response.data);
-  
-        const habitacionResponse = await axios.get(`http://localhost:5000/api/habitaciones/${numero}/${cama}`);
+        const habitacionResponse = await api.get(`/habitaciones/${numero}/${cama}`);
         const pacienteDni = habitacionResponse.data.pacienteDni;
-  
+
         if (pacienteDni) {
-          const pacienteResponse = await axios.get(`http://localhost:5000/api/pacientes/${pacienteDni}`);
+          setDniPaciente(pacienteDni);
+
+          const pacienteResponse = await api.get(`/pacientes/${pacienteDni}`);
           setNombrePaciente(pacienteResponse.data.nombre);
           setApellidoPaciente(pacienteResponse.data.apellido);
+
+          const parametrosResponse = await api.get(`/parametros/${pacienteDni}`);
+          setParametros(parametrosResponse.data);
         } else {
           console.error('No se encontró el DNI del paciente en la habitación:', numero, cama);
         }
       } catch (error) {
-        console.error('Error al obtener los parámetros o el paciente:', error.response ? error.response.data : error.message);
+        console.error('Error al obtener los parámetros o el paciente:', error);
       }
     };
-  
+
     fetchParametros();
   }, [numero, cama]);
-  
-  const handleSave = async () => {
-    try {
-      await axios.put(`http://localhost:5000/api/parametros/`, parametros);
-      alert('Parámetros guardados exitosamente');
-    } catch (error) {
-      console.error('Error al guardar los parámetros:', error.response ? error.response.data : error.message);
-    }
+
+  const handleChange = (e, parametro) => {
+    const { value } = e.target;
+    setParametros(prevState => ({
+      ...prevState,
+      [parametro]: value
+    }));
   };
 
+  const handleSave = async () => {
+    try {
+      const response = await api.post('/parametros/', {
+        dniPaciente,
+        ...parametros
+      });
+      console.log('Respuesta del servidor:', response.data);
+
+      const pacienteResponse = await api.get(`/pacientes/${response.data.dniPaciente}`);
+      setNombrePaciente(pacienteResponse.data.nombre);
+      setApellidoPaciente(pacienteResponse.data.apellido);
+
+      setParametros(response.data); // Actualiza el estado con los datos guardados
+
+      // Redirige a la habitación después de guardar
+      navigate(`/habitaciones/${numero}/${cama}`);
+    } catch (error) {
+      console.error('Error al guardar los parámetros:', error.message);
+    }
+  };
   const getClasificacion = (parametro, valor) => {
     const numericValue = parseFloat(valor);
     switch (parametro) {
@@ -110,7 +133,7 @@ const Parametros = () => {
               Parámetros Clínicos - Habitación {numero} - Cama {cama}
             </Typography>
             <Typography align="center" gutterBottom>
-              Paciente: {nombrePaciente || 'Sin nombre'} {apellidoPaciente || 'Sin apellido'}
+              Paciente: {nombrePaciente || 'Sin nombre'} {apellidoPaciente || 'Sin apellido'} (DNI: {dniPaciente})
             </Typography>
             <TableContainer>
               <Table>
@@ -132,7 +155,7 @@ const Parametros = () => {
                       <TableCell>{getValorReferenciaMax(parametro)}</TableCell>
                       <TableCell>
                         <TextField
-                          value={parametros[parametro]}
+                          value={parametros[parametro] || ''}
                           onChange={(e) => handleChange(e, parametro)}
                           variant="outlined"
                           size="small"
@@ -182,8 +205,6 @@ const getValorReferenciaMin = (parametro) => {
     case 'fc': return 60;
     case 'fr': return 12;
     case 'temp': return 35.5;
-    case 'peso': return 1;
-    case 'talla': return 20;
     case 'spo2': return 95;
     case 'glucometria': return 70;
     case 'HemoglucotestPreprandial': return 70;
@@ -198,9 +219,7 @@ const getValorReferenciaMax = (parametro) => {
     case 'pad': return 90;
     case 'fc': return 100;
     case 'fr': return 20;
-    case 'temp': return 37.;
-    case 'peso': return 200;
-    case 'talla': return 250;
+    case 'temp': return 37.4;
     case 'spo2': return 100;
     case 'glucometria': return 110;
     case 'HemoglucotestPreprandial': return 110;
@@ -214,14 +233,14 @@ const getUnidades = (parametro) => {
     case 'pas': 
     case 'pad': return 'mmHg';
     case 'fc': 
-    case 'fr': return 'V x Min';
+    case 'fr': return 'lpm';
     case 'temp': return '°C';
-    case 'peso': return 'Kg';
-    case 'talla': return 'Cm';
+    case 'peso': return 'kg';
+    case 'talla': return 'cm';
     case 'spo2': return '%';
-    case 'glucometria': 
-    case 'HemoglucotestPreprandial': 
-    case 'HemoglucotestPostprandial': return 'Mg/dl';
+    case 'glucometria':
+    case 'HemoglucotestPreprandial':
+    case 'HemoglucotestPostprandial': return 'mg/dl';
     default: return '';
   }
 };
