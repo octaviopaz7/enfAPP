@@ -1,3 +1,16 @@
+/*background para login*/
+body.login-bg {
+  background: url('./assets/imagenes/Login.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
+body.registro-bg {
+  background: url('./assets/imagenes/Registro.jpg') no-repeat center center;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+
 /* Reset de estilos básico */
 * {
   margin: 0;

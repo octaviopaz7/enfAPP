@@ -6,6 +6,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../backend/src/routes/api';
+import Swal from 'sweetalert2';
 
 const Search = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -73,8 +74,15 @@ const NavBar = () => {
   };
 
   const handleLogout = () => {
-    handleMenuClose();
-    navigate('/login');
+    // Mostrar SweetAlert2 al cerrar sesión exitosamente
+    Swal.fire({
+      icon: 'success',
+      title: 'Sesión cerrada',
+      text: '¡Has cerrado sesión exitosamente!',
+    }).then(() => {
+      handleMenuClose();
+      navigate('/login');
+    });
   };
 
   const handleChangePassword = () => {
@@ -138,7 +146,7 @@ const NavBar = () => {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Buscar…"
+              placeholder="Buscar medicamento…"
               inputProps={{ 'aria-label': 'buscar' }}
               value={query}
               onChange={(e) => setQuery(e.target.value)}

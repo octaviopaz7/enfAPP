@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, TextField, Box, Typography, Container } from '@mui/material';
-import api from '../../../backend/src/routes/api'; // Asegúrate de importar correctamente la instancia de Axios configurada
+import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 const CambiarContraseña = () => {
@@ -32,7 +33,14 @@ const CambiarContraseña = () => {
         oldPassword: contraseñaActual,
         newPassword: nuevaContraseña,
       });
-      alert(response.data.message);
+
+       // Mostrar SweetAlert2 cuando el cambio de contraseña sea exitoso
+       Swal.fire({
+        icon: 'success',
+        title: 'Contraseña cambiada',
+        text: 'Tu contraseña ha sido cambiada exitosamente.',
+      });
+      
       navigate('/pisos'); // Redirigir a otra página después de cambiar la contraseña
     } catch (error) {
       console.error('Error al cambiar la contraseña:', error.message);
@@ -41,13 +49,17 @@ const CambiarContraseña = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{ height: '80vh', display: 'flex', alignItems: 'center'}}>
       <Box
         sx={{
+          marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          mt: 8,
+          backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semi-transparente blanco
+          padding: '20px',
+          borderRadius: '8px',
+          boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', // Sombra suave
         }}
       >
         <Typography component="h1" variant="h5">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HabitacionesProvider } from './components/hooks/HabitacionesContext';
 import Piso from './components/Pisos';
@@ -16,6 +16,20 @@ import Parametros from './components/Parametros';
 const App = () => {
   const location = useLocation();
   const isAuthRoute = location.pathname === '/login' || location.pathname === '/register';
+
+  useEffect(() => {
+    console.log(location.pathname); // Verifica la ruta actual en la consola
+    if (location.pathname === '/login') {
+      document.body.classList.add('login-bg');
+      document.body.classList.remove('registro-bg');
+    } else if (location.pathname === '/register' || location.pathname === '/cambiar-contrase%C3%B1a') {
+      document.body.classList.add('registro-bg');
+      document.body.classList.remove('login-bg');
+    } else {
+      document.body.classList.remove('login-bg', 'registro-bg');
+    }
+  }, [location.pathname]);
+
 
   return (
     <HabitacionesProvider>
