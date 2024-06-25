@@ -7,6 +7,7 @@ const SearchMedicationCard = ({ medication }) => {
       variant="outlined"
       sx={{
         maxWidth: 300,
+        height: 370,
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
         boxShadow: '0px 1px 3px rgba(0, 0, 0, 1)',
         borderRadius: '5px',
