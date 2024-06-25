@@ -12,7 +12,7 @@ const SearchMedicationCard = ({ medication }) => {
         boxShadow: '0px 1px 3px rgba(0, 0, 0, 1)',
         borderRadius: '5px',
         padding: '10px',
-        margin: '10px 40px 10px 40px', // Espacio adicional opcional entre tarjetas
+        margin: '50px 40px 10px 40px', // Espacio adicional opcional entre tarjetas
       }}
     >
       <CardContent>

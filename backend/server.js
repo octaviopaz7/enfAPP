@@ -27,6 +27,14 @@ app.use('/api/habitaciones', habitacionesRoutes);
 app.use('/api/pacientes', pacientesRoutes);
 app.use('/api/parametros', parametrosRoutes); // Usa la variable `parametrosRoutes` que importa `parametros.js`
 
+// Servir archivos estáticos de la aplicación React
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
+// Redirigir todas las demás solicitudes al index.html de React
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
