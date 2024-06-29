@@ -73,7 +73,7 @@ const SearchMedication = () => {
         </Box>
       );
     }
-
+  
     if (error) {
       return (
         <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
@@ -83,7 +83,9 @@ const SearchMedication = () => {
         </Box>
       );
     }
-
+  
+    console.log("Medications:", medications);
+  
     if (medications.length > 0) {
       return (
         <Box>
@@ -97,6 +99,8 @@ const SearchMedication = () => {
         </Box>
       );
     }
+  
+    return null;
   };
 
   return <Box>{renderResults()}</Box>;

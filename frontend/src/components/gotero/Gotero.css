@@ -1,22 +1,14 @@
 .gotero-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  max-width: 800px;
-  margin: 40px auto;
-  background-color: #f9f9f9;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
 }
 
 .gotero-content {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 
 .selector-gotero {
@@ -27,43 +19,49 @@
 
 .selector-gotero button {
   padding: 10px 20px;
-  margin: 50px;
+  margin: 10px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .selector-gotero button.active {
-  background-color: #00b31e9c;
+  background-color: #00b31e;
+}
+
+.selector-gotero button:hover {
+  font-size: 1.2rem;
+  background-color: #0056b3;
 }
 
 .form-gotero {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   width: 100%;
+  max-width: 600px;
 }
 
 .form-group {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
 .form-group label {
-  flex: 1;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  margin-bottom: 5px;
 }
 
 .form-group input, .form-group select {
-  flex: 2;
-  margin-left: 10px;
   padding: 10px;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .btn-calculate {
@@ -74,6 +72,8 @@
   border-radius: 5px;
   font-size: 1.2rem;
   cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 2 ease;
 }
 
 .btn-calculate:hover {
@@ -109,14 +109,12 @@
   height: 300px;
   transform: translate(-50%, 0);
 }
-
 .drop {
   position: absolute;
-  top: 0;
   left: 50%;
-  width: 10px;
+  width: 15px;
   height: 20px;
-  background-color: blue;
+  background-color: rgba(51, 190, 255, 0.8); /* Color azul con más opacidad */
   border-radius: 50%;
   animation: drip infinite;
   transform: translateX(-50%);
@@ -136,18 +134,21 @@
 .resultado-animacion-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
   width: 100%;
 }
 
 .resultado-container {
   text-align: left;
-  width: 102%;
-  padding: 10px;
+  width: 100%;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   font-size: 1rem;
+  margin-bottom: 20px;
   margin: 10px auto;
 }
 
@@ -155,9 +156,11 @@
   font-weight: bold;
 }
 
-@media (max-width: 600px) {
-  .resultado-container {
+@media (min-width: 768px) {
+  .gotero-content {
+    flex-direction: row;
+    justify-content: space-between;
     font-size: 0.9rem;
-    padding: 15px;
-  }
+    padding: 15px;  }
+
 }
