@@ -1,6 +1,6 @@
 .gotero-container {
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
 }
@@ -49,7 +49,7 @@
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
@@ -73,7 +73,7 @@
   font-size: 1.2rem;
   cursor: pointer;
   margin-top: 10px;
-  transition: background-color 2 ease;
+  transition: background-color 0.3s ease;
 }
 
 .btn-calculate:hover {
@@ -102,33 +102,35 @@
 }
 
 .drip-body {
-  position: absolute;
-  top: 0;
+  position: relative;
+  top: 2px; /* Corregido: Añadido 'px' para posición */
   left: 50%;
-  width: 10px;
-  height: 300px;
-  transform: translate(-50%, 0);
-}
-.drop {
-  position: absolute;
-  left: 50%;
-  width: 15px;
-  height: 20px;
-  background-color: rgba(51, 190, 255, 0.8); /* Color azul con más opacidad */
-  border-radius: 50%;
-  animation: drip infinite;
+  width: 30px;
+  height: 30px;
   transform: translateX(-50%);
 }
 
 @keyframes drip {
   0% {
-    top: 0;
-    opacity: 1;
+    top: 1px; /* Posición inicial */
+    opacity: 1; /* Opacidad inicial */
   }
   100% {
-    top: 100%;
-    opacity: 0;
+    top: 300px; /* Posición final */
+    opacity: 1; /* Opacidad final */
   }
+}
+
+/* Estilo para el elemento de la gota */
+.drop {
+  position: absolute;
+  width: 20px; /* Ajusta el tamaño según sea necesario */
+  height: 25px; /* Ajusta el tamaño según sea necesario */
+  background-color: rgba(51, 190, 255, 0.8); /* Color de la gota con opacidad */
+  border-radius: 50%; /* Forma circular */
+  top: 0; /* Posición inicial (puede ajustarse según diseño) */
+  left: 50%; /* Centro horizontalmente */
+  transform: translateX(-50%); /* Centrado horizontal */
 }
 
 .resultado-animacion-container {
@@ -136,26 +138,41 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  align-items: center;
   margin-top: 20px;
   width: 100%;
 }
 
 .resultado-container {
-  text-align: left;
-  width: 100%;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: #fff7f7a4;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 600px;
   margin-bottom: 20px;
-  margin: 10px auto;
 }
 
 .tipo-gotero {
+  font-size: 1.5rem;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.resultado-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.resultado-label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.resultado-value {
+  color: #000000;
 }
 
 @media (min-width: 768px) {
@@ -163,6 +180,23 @@
     flex-direction: row;
     justify-content: space-between;
     font-size: 0.9rem;
-    padding: 15px;  }
+    padding: 15px;
+  }
+}
 
+/* Estilos para h1 y p */
+.gotero-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000; /* Color azul */
+}
+
+.gotero-container p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333; /* Color gris oscuro */
+  margin-bottom: 10px;
 }

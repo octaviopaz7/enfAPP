@@ -24,13 +24,13 @@ body.habitaciones-bg {
 }
 
 body.gotero-bg {
-  background: url('./assets/imagenes/Gotero.jpg') no-repeat center center;
+  background: url('./assets/imagenes/gotero.jpg') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
 
 body.parametros-bg {
-  background: url('./assets/imagenes/Parametros.jpg') no-repeat center center;
+  background: url('./assets/imagenes/parametros.jpg') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
@@ -273,7 +273,7 @@ body {
   background-color: #00f;
   border-radius: 50%;
   position: absolute;
-  top: 5px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
   animation: drip 2s infinite;

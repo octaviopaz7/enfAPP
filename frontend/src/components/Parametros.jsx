@@ -209,8 +209,6 @@ const Parametros = () => {
             </Box>
           </Box>
         </Paper>
-      </Box>
-    </Container>
   );  
 };
 

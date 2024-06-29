@@ -3,8 +3,8 @@ import FormGotero from './Formgotero';
 import ResultadoGotero from './ResultadoGotero';
 import DripAnimacion from './DripAnimacion';
 import './Gotero.css';
-import { Container, Card, CardContent, Typography, Button } from '@mui/material';
-
+import { IconButton } from '@mui/material';
+import StopIcon from '@mui/icons-material/Stop'; // Importa el icono de parar rojo
 const Gotero = () => {
   const [results, setResults] = useState(null);
   const [dropCount, setDropCount] = useState(0);
@@ -45,22 +45,25 @@ const Gotero = () => {
       <div className="gotero-content">
         <FormGotero onCalculate={handleCalculate} />
         {results && (
-          <div className="resultado-animacion-container">
+          <div className="resultado-container">
             <ResultadoGotero results={results} dropCount={dropCount} />
-            <DripAnimacion 
-              dropsPerMinute={results.dropsPerMinute} 
-              onDropCountChange={handleDropCountChange} 
-              isAnimating={isAnimating}
-            />
-            {isAnimating && (
-              <Button variant="contained" color="secondary" onClick={handleStopAnimation}>
-                Detener Animación
-              </Button>
-            )}
+            <div className="resultado-animacion-container">
+              {isAnimating && (
+               <IconButton color="error" onClick={handleStopAnimation}>
+                <p>Detener</p>
+                <StopIcon />
+              </IconButton>
+              )}
+              <DripAnimacion
+                dropsPerMinute={results.dropsPerMinute}
+                onDropCountChange={handleDropCountChange}
+                isAnimating={isAnimating}
+              />
+            </div>
           </div>
         )}
       </div>
-    </div>  
+    </div>
   );
 };
 

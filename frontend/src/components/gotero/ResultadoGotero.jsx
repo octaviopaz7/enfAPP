@@ -14,13 +14,26 @@ const ResultadoGotero = ({ results, dropCount }) => {
 
   const volumeUnit = volumeUnitMap[results.volumeUnit] || results.volumeUnit;
   const timeUnit = timeUnitMap[results.timeUnit] || results.timeUnit;
+
   return (
     <div className="resultado-container">
-      <p className="tipo-gotero">Tipo de Gotero: {results.goteroType}</p>
-      <p>Volumen: {results.volume} {volumeUnit}</p>
-      <p>Tiempo: {results.time} {timeUnit}</p>
-      <p>Gotas por minuto: {results.dropsPerMinute}</p>
-      <p>Gotas cayendo: {dropCount}</p>
+      <h2 className="tipo-gotero">{results.goteroType}</h2>
+      <div className="resultado-item">
+        <span className="resultado-label">Volumen:</span>
+        <span className="resultado-value">{results.volume} {volumeUnit}</span>
+      </div>
+      <div className="resultado-item">
+        <span className="resultado-label">Tiempo:</span>
+        <span className="resultado-value">{results.time} {timeUnit}</span>
+      </div>
+      <div className="resultado-item">
+        <span className="resultado-label">Gotas por minuto:</span>
+        <span className="resultado-value">{results.dropsPerMinute}</span>
+      </div>
+      <div className="resultado-item">
+        <span className="resultado-label">Gotas cayendo:</span>
+        <span className="resultado-value">{dropCount}</span>
+      </div>
     </div>
   );
 };

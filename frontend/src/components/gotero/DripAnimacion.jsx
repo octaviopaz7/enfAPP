@@ -7,32 +7,41 @@ const DripAnimacion = ({ dropsPerMinute, onDropCountChange, isAnimating }) => {
 
   useEffect(() => {
     const handleAnimationIteration = () => {
-      onDropCountChange();
+      onDropCountChange(); // Call the callback when animation iteration occurs
     };
 
-    if (dropRef.current) {
-      if (isAnimating) {
-        dropRef.current.style.animation = 'none';
+    // Function to handle animation setup and cleanup
+    const setupAnimation = () => {
+      if (dropRef.current) {
+        dropRef.current.style.animation = 'none'; // Reset animation to none
         dropRef.current.offsetHeight; // Trigger reflow
-        dropRef.current.style.animation = `drip ${animationDuration}s infinite`;
-        dropRef.current.addEventListener('animationiteration', handleAnimationIteration);
-      } else {
-        dropRef.current.style.animation = 'none';
-        dropRef.current.removeEventListener('animationiteration', handleAnimationIteration);
+        dropRef.current.style.animation = `drip ${animationDuration}s infinite`; // Apply animation with calculated duration
+        dropRef.current.addEventListener('animationiteration', handleAnimationIteration); // Add event listener for animation iteration
+      }
+    };
+
+    if (isAnimating) {
+      setupAnimation(); // Setup animation if isAnimating is true
+    } else {
+      if (dropRef.current) {
+        dropRef.current.style.animation = 'none'; // Remove animation if isAnimating is false
+        dropRef.current.removeEventListener('animationiteration', handleAnimationIteration); // Remove event listener
       }
     }
 
     return () => {
+      // Cleanup function to remove event listener when component unmounts or dependencies change
       if (dropRef.current) {
         dropRef.current.removeEventListener('animationiteration', handleAnimationIteration);
       }
     };
-  }, [dropsPerMinute, animationDuration, onDropCountChange, isAnimating]);
+  }, [dropsPerMinute, animationDuration, isAnimating, onDropCountChange]);
 
   return (
     <div className="drip-animacion-background">
       <div className="drip-container">
         <div className="drip-body">
+          {/* Render the drop element with ref and dynamic animation duration */}
           <div
             ref={dropRef}
             className="drop"
