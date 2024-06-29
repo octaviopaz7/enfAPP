@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HabitacionesProvider } from './components/hooks/HabitacionesContext';
 import Piso from './components/Pisos';
@@ -16,6 +16,44 @@ import Parametros from './components/Parametros';
 const App = () => {
   const location = useLocation();
   const isAuthRoute = location.pathname === '/login' || location.pathname === '/register';
+
+  useEffect(() => {
+    //console.log(location.pathname);
+    switch (true) {
+      case location.pathname.startsWith('/habitaciones/') || location.pathname === '/paciente-form':
+        document.body.classList.add('habitaciones-bg');
+        document.body.classList.remove('login-bg', 'registro-bg', 'pisos-bg', 'gotero-bg', 'parametros-bg', 'medicamentos-bg');
+        break;
+      case location.pathname === '/login':
+        document.body.classList.add('login-bg');
+        document.body.classList.remove('registro-bg', 'pisos-bg', 'habitaciones-bg', 'gotero-bg', 'parametros-bg', 'medicamentos-bg');
+        break;
+      case location.pathname === '/register' || location.pathname === '/cambiar-contrase%C3%B1a':
+        document.body.classList.add('registro-bg');
+        document.body.classList.remove('login-bg', 'pisos-bg', 'habitaciones-bg', 'gotero-bg', 'parametros-bg', 'medicamentos-bg');
+        break;
+      case location.pathname === '/pisos':
+        document.body.classList.add('pisos-bg');
+        document.body.classList.remove('login-bg', 'registro-bg', 'habitaciones-bg', 'gotero-bg', 'parametros-bg', 'medicamentos-bg');
+        break;
+      case location.pathname === '/calculadora-de-goteo':
+        document.body.classList.add('gotero-bg');
+        document.body.classList.remove('login-bg', 'registro-bg', 'pisos-bg', 'habitaciones-bg', 'parametros-bg', 'medicamentos-bg');
+        break;
+      case location.pathname.startsWith('/habitacion/') && location.pathname.includes('/parametros'):
+        document.body.classList.add('parametros-bg');
+        document.body.classList.remove('login-bg', 'registro-bg', 'pisos-bg', 'habitaciones-bg', 'gotero-bg', 'medicamentos-bg');
+        break;
+      case location.pathname === '/Search-medication/search':
+        document.body.classList.add('medicamentos-bg');
+        document.body.classList.remove('login-bg', 'registro-bg', 'pisos-bg', 'habitaciones-bg', 'gotero-bg', 'parametros-bg');
+        break;
+      default:
+        document.body.classList.remove('login-bg', 'registro-bg', 'pisos-bg', 'habitaciones-bg', 'gotero-bg', 'parametros-bg', 'medicamentos-bg');
+        break;
+    }
+  }, [location.pathname]);
+
 
   return (
     <HabitacionesProvider>

@@ -44,7 +44,6 @@ const Parametros = () => {
           console.error('No se encontró el DNI del paciente en la habitación:', numero, cama);
         }
       } catch (error) {
-        console.error('Error al obtener los parámetros o el paciente:', error);
       }
     };
 
@@ -71,8 +70,7 @@ const Parametros = () => {
       setNombrePaciente(pacienteResponse.data.nombre);
       setApellidoPaciente(pacienteResponse.data.apellido);
   
-      setParametros(response.data); // Actualiza el estado con los datos guardados
-  
+      setParametros(response.data); // Actualiza el estado con los datos guardados  
       // Muestra la alerta de éxito
       Swal.fire({
         icon: 'success',
@@ -84,6 +82,7 @@ const Parametros = () => {
         navigate(`/habitaciones/${numero}/${cama}`);
       });
   
+
     } catch (error) {
       console.error('Error al guardar los parámetros:', error.message);
   
@@ -145,9 +144,14 @@ const Parametros = () => {
   }
 
   return (
-    <Container maxWidth="lg">
-      <Box mt={4}>
-        <Paper elevation={3}>
+        <Paper elevation={2} style={{
+          maxWidth: 1200,
+          maxHeight: 1060,
+          padding: 20,
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 1)',
+          margin: 'auto', marginTop: 50
+        }}>
           <Box p={3}>
             <Typography variant="h4" align="center" gutterBottom>
               Parámetros Clínicos - Habitación {numero} - Cama {cama}
@@ -181,6 +185,7 @@ const Parametros = () => {
                           <TableCell>{getValorReferenciaMax(parametro)}</TableCell>
                         </>
                       )}
+
                       <TableCell>
                         <TextField
                           value={parametros[parametro] || ''}

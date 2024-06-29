@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography, Container, Box, Grid, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
 
 const FormRegistro = () => {
@@ -24,6 +25,13 @@ const FormRegistro = () => {
     try {
       const response = await api.post('/usuarios/register', { usuario, contraseña });
       console.log(response.data);
+      
+      Swal.fire({
+        icon: 'success',
+        title: `¡Usuario ${usuario} registrado!`,
+        text: 'Registro exitoso',
+      });
+
       navigate('/login');
     } catch (error) {
       console.error('Error al registrar usuario:', error.message);
@@ -47,13 +55,17 @@ const FormRegistro = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{ height: '85vh', display: 'flex', alignItems: 'center' }}>
       <Box
         sx={{
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+          boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', 
+          padding: '20px',
+          borderRadius: '8px'
         }}
       >
         <Typography component="h1" variant="h5">

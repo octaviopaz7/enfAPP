@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Button, Container, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Grid, Button, Container, Select, MenuItem, FormControl, InputLabel, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useHabitaciones } from '../components/hooks/HabitacionesContext';
 
@@ -44,7 +44,14 @@ const Pisos = () => {
 
       return (
         <Grid item key={numero} xs={12} sm={6} md={4} lg={3} xl={2}>
-          <Container maxWidth="sm" style={{ backgroundColor: '#f0f0f0', padding: '10px', marginBottom: '10px' }}>
+          <Container maxWidth="sm"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+              boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', 
+              borderRadius: '5px',
+              padding: '10px',
+              marginBottom: '10px'
+            }}>
             <Grid container spacing={3} alignItems="center">
               <Grid item xs={6}>
                 <Button
@@ -74,8 +81,29 @@ const Pisos = () => {
   return (
     <React.Fragment>
       <Container maxWidth="lg" style={{ marginTop: '20px' }}>
-        <FormControl variant="outlined" className="formControl">
-          <InputLabel id="select-piso-label">Seleccionar Piso</InputLabel>
+        <Typography 
+          variant="h4" 
+          align="center" 
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+            boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', 
+            padding: '10px', 
+            borderRadius: '5px',
+            display: 'inline-block',
+            marginBottom: '20px'
+          }}
+        >
+          Habitaciones
+        </Typography>
+        <FormControl variant="outlined" className="formControl" 
+        style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.2)', 
+          boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', 
+          padding: '10px', 
+          borderRadius: '5px',
+          marginBottom: '30px'
+        }}>
+          <InputLabel id="select-piso-label" sx={{fontWeight:"bold", color:'#fff'}}>Seleccionar Piso</InputLabel>
           <Select
             labelId="select-piso-label"
             id="select-piso"
@@ -83,6 +111,7 @@ const Pisos = () => {
             onChange={handlePisoChange}
             label="Seleccionar Piso"
             className="select"
+           sx={{fontWeight:"bold"}}
           >
             <MenuItem value={100}>Piso 100</MenuItem>
             <MenuItem value={200}>Piso 200</MenuItem>

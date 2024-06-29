@@ -21,7 +21,6 @@ const LoginForm = () => {
       // Guardar el nombre de usuario en el almacenamiento local
       localStorage.setItem('usuario', usuario);
 
-      // Mostrar SweetAlert2 con el nombre del usuario
       Swal.fire({
         icon: 'success',
         title: `¡Bienvenido, ${usuario}!`,
@@ -51,13 +50,17 @@ const LoginForm = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{ height: '90vh', display: 'flex', alignItems: 'center' }}>
       <Box
         sx={{
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo semi-transparente blanco
+          padding: '20px',
+          borderRadius: '8px',
+          boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', // Sombra suave
         }}
       >
         <Typography component="h1" variant="h5">

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Menu, MenuItem, Box } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Menu, MenuItem, Box} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
 import DripCalculatorIcon from './DripCalculatorIcon';
 import api from '../../../backend/src/routes/api';
+import Swal from 'sweetalert2';
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -31,8 +32,15 @@ const NavBar = () => {
   };
 
   const handleLogout = () => {
-    handleMenuClose();
-    navigate('/login');
+    // Mostrar SweetAlert2 al cerrar sesión exitosamente
+    Swal.fire({
+      icon: 'success',
+      title: 'Sesión cerrada',
+      text: '¡Has cerrado sesión exitosamente!',
+    }).then(() => {
+      handleMenuClose();
+      navigate('/login');
+    });
   };
 
   const handleChangePassword = () => {
@@ -115,6 +123,7 @@ const NavBar = () => {
             >
               <DripCalculatorIcon />
             </IconButton>
+
             <Typography
               variant="h6"
               noWrap
