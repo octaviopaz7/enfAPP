@@ -101,7 +101,7 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
   return (
     <Card variant="outlined"
       style={{
-        maxWidth: 400,
+        maxWidth: 350,
         padding: 20,
         backgroundColor: 'rgba(255, 255, 255, 0.8)',
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 1)',

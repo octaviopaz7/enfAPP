@@ -43,16 +43,16 @@ const Pisos = () => {
       const colorB = habitacionB && habitacionB.estado === 'ocupada' ? 'red' : 'green';
 
       return (
-        <Grid item key={numero} xs={12} sm={6} md={4} lg={3} xl={2}>
+        <Grid item key={numero} xs={10} sm={6} md={4} lg={3} xl={2}>
           <Container maxWidth="sm"
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.5)', 
-              boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', 
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)',
               borderRadius: '5px',
               padding: '10px',
-              marginBottom: '10px'
+              marginBottom: '10px',
             }}>
-            <Grid container spacing={3} alignItems="center">
+            <Grid container spacing={3} alignItems="center" justifyContent="center">
               <Grid item xs={6}>
                 <Button
                   variant="contained"
@@ -80,47 +80,52 @@ const Pisos = () => {
 
   return (
     <React.Fragment>
-      <Container maxWidth="lg" style={{ marginTop: '20px' }}>
-        <Typography 
-          variant="h4" 
-          align="center" 
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.5)', 
-            boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', 
-            padding: '10px', 
-            borderRadius: '5px',
-            display: 'inline-block',
-            marginBottom: '20px'
-          }}
-        >
-          Habitaciones
-        </Typography>
-        <FormControl variant="outlined" className="formControl" 
-        style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.2)', 
-          boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)', 
-          padding: '10px', 
-          borderRadius: '5px',
-          marginBottom: '30px'
+      <Container maxWidth="lg" style={{ marginTop: '40px' }}>
+        <Grid container 
+        sx={{display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'  
         }}>
-          <InputLabel id="select-piso-label" sx={{fontWeight:"bold", color:'#fff'}}>Seleccionar Piso</InputLabel>
-          <Select
-            labelId="select-piso-label"
-            id="select-piso"
-            value={pisoSeleccionado}
-            onChange={handlePisoChange}
-            label="Seleccionar Piso"
-            className="select"
-           sx={{fontWeight:"bold"}}
-          >
-            <MenuItem value={100}>Piso 100</MenuItem>
-            <MenuItem value={200}>Piso 200</MenuItem>
-            <MenuItem value={300}>Piso 300</MenuItem>
-            <MenuItem value={400}>Piso 400</MenuItem>
-            <MenuItem value={500}>Piso 500</MenuItem>
-          </Select>
-        </FormControl>
-        <Grid container spacing={3}>
+          <Typography
+            variant="h4"
+            align="center"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.7)',
+              boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)',
+              padding: '10px',
+              borderRadius: '5px',
+              display: 'inline-block',
+              marginBottom: '20px'
+            }}>
+            Habitaciones
+          </Typography>
+          <FormControl variant="outlined" className="formControl"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.7)',
+              boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)',
+              padding: '10px',
+              borderRadius: '5px',
+              marginBottom: '30px',
+              minWidth: '100px'
+            }}>
+            <InputLabel id="select-piso-label" sx={{ fontWeight: "bold", color: '#000' }}>Seleccionar Piso</InputLabel>
+            <Select
+              labelId="select-piso-label"
+              id="select-piso"
+              value={pisoSeleccionado}
+              onChange={handlePisoChange}
+              label="Seleccionar Piso"
+              className="select"
+              sx={{ fontWeight: "bold" }} >
+              <MenuItem value={100}>Piso 100</MenuItem>
+              <MenuItem value={200}>Piso 200</MenuItem>
+              <MenuItem value={300}>Piso 300</MenuItem>
+              <MenuItem value={400}>Piso 400</MenuItem>
+              <MenuItem value={500}>Piso 500</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid container spacing={3} alignItems='center' marginLeft={0}>
           {renderHabitaciones()}
         </Grid>
       </Container>

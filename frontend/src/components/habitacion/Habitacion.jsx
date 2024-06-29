@@ -147,7 +147,8 @@ const Habitacion = () => {
             borderRadius: '5px',
             backgroundColor: 'rgba(255, 255, 255, 0.8)',
             boxShadow: '0px 3px 5px rgba(0, 0, 0, 1)',
-            padding: '20px', // Añadir relleno
+            padding: '20px',
+            margin: '30px'
           }}>
             <Typography variant="h4" component="div" align="center" marginBottom={2} gutterBottom>
               Habitación {numero} - Cama {cama}
