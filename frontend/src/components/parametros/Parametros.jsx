@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';  // Importa useNavigate
-import api from '../../../backend/src/routes/api';
+import api from '../../../../backend/src/routes/api';
 import { Container, Box, Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TextField, Button, useMediaQuery } from '@mui/material';
 import Swal from 'sweetalert2';
 
@@ -209,8 +209,6 @@ const Parametros = () => {
             </Box>
           </Box>
         </Paper>
-      </Box>
-    </Container>
   );  
 };
 

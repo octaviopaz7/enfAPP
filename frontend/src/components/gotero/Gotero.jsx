@@ -3,7 +3,7 @@ import FormGotero from './Formgotero';
 import ResultadoGotero from './ResultadoGotero';
 import DripAnimacion from './DripAnimacion';
 import './Gotero.css';
-import { Container, Card, CardContent, Typography, Button } from '@mui/material';
+import {  Button } from '@mui/material';
 
 const Gotero = () => {
   const [results, setResults] = useState(null);

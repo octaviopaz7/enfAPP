@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Button, Container, Select, MenuItem, FormControl, InputLabel, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useHabitaciones } from '../components/hooks/HabitacionesContext';
+import { useHabitaciones } from '../hooks/HabitacionesContext';
 
 const Pisos = () => {
   const navigate = useNavigate();

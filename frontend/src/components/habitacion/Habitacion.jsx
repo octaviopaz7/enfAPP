@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../../backend/src/routes/api';
-import PacienteForm from './PacienteForm';
+import api from '../../../../backend/src/routes/api';
+import PacienteForm from '../pacienteForm/PacienteForm';
 import { Button, Container, Typography, Grid, Card, CardContent } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { useHabitaciones } from './hooks/HabitacionesContext';
+import { useHabitaciones } from '../hooks/HabitacionesContext';
 import Swal from 'sweetalert2';
 
 const Habitacion = () => {

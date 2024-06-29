@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Grid, Card, CardContent, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useHabitaciones } from './hooks/HabitacionesContext';
-import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
+import { useHabitaciones } from '../hooks/HabitacionesContext';
+import api from '../../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
 import Swal from 'sweetalert2';
 
 

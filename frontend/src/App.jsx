@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HabitacionesProvider } from './components/hooks/HabitacionesContext';
-import Piso from './components/Pisos';
-import Habitacion from './components/Habitacion';
-import PacienteForm from './components/PacienteForm';
-import LoginForm from './components/LoginForm';
-import FormRegistro from './components/FormRegistro';
-import NavBar from './components/NavBar';
-import CambiarContraseña from './components/CambiarContraseña';
-import SearchMedication from './components/SearchMedication';
+import Piso from './components/pisos/Pisos';
+import Habitacion from './components/habitacion/Habitacion';
+import PacienteForm from './components/pacienteForm/PacienteForm';
+import LoginForm from './components/loginForm/LoginForm';
+import FormRegistro from './components/formRegistro/FormRegistro';
+import NavBar from './components/navBar/NavBar';
+import CambiarContraseña from './components/cambiarContraseña/CambiarContraseña';
+import SearchMedication from './components/buscarMedicacion/SearchMedication';
 import Gotero from './components/gotero/Gotero';
-import Parametros from './components/Parametros';
+import Parametros from './components/parametros/Parametros';
 
 
 const App = () => {

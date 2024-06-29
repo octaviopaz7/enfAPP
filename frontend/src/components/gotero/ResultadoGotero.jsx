@@ -1,5 +1,5 @@
 import React from 'react';
-import './Gotero.css'; // Asegúrate de importar el archivo CSS
+import './Gotero.css'; 
 
 const ResultadoGotero = ({ results, dropCount }) => {
   const volumeUnitMap = {

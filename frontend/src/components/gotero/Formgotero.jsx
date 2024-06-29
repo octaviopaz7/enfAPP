@@ -1,4 +1,3 @@
-// FormGotero.jsx
 import React, { useState } from 'react';
 
 const FormGotero = ({ onCalculate }) => {

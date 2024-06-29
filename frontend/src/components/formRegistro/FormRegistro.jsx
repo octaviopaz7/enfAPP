@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, TextField, Typography, Container, Box, Grid, Link } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
+import api from '../../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
 
 const FormRegistro = () => {
   const [usuario, setUsuario] = useState('');

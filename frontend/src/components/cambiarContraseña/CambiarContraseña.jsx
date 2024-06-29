@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, TextField, Box, Typography, Container } from '@mui/material';
-import api from '../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
+import api from '../../../../backend/src/routes/api'; // Importa la instancia de Axios configurada
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 

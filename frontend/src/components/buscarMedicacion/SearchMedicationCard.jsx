@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography, Box, Divider } from '@mui/material';
+
 const SearchMedicationCard = ({ medication }) => {
   return (
     <Card className="medication-card">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Typography, Grid, CircularProgress, Container } from '@mui/material'; // Importa los componentes de Material-UI necesarios
 import SearchMedicationCard from './SearchMedicationCard';
-import api from '../../../backend/src/routes/api'; // Asegúrate de importar correctamente la instancia de Axios
+import api from '../../../../backend/src/routes/api'; // Asegúrate de importar correctamente la instancia de Axios
 import Swal from 'sweetalert2';
 
 const SearchMedication = () => {

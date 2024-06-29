@@ -4,8 +4,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
-import DripCalculatorIcon from './DripCalculatorIcon';
-import api from '../../../backend/src/routes/api';
+import DripCalculatorIcon from './DripCalculatorIcon'
+import api from '../../../../backend/src/routes/api';
 import Swal from 'sweetalert2';
 
 const NavBar = () => {
