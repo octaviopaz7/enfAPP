@@ -1,36 +1,25 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
-
+import { Card, CardContent, Typography, Box, Divider } from '@mui/material';
 const SearchMedicationCard = ({ medication }) => {
   return (
-    <Card
-      variant="outlined"
-      sx={{
-        maxWidth: 300,
-        height: 370,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-        boxShadow: '0px 1px 3px rgba(0, 0, 0, 1)',
-        borderRadius: '5px',
-        padding: '10px',
-        margin: '50px 40px 10px 40px', // Espacio adicional opcional entre tarjetas
-      }}
-    >
+    <Card className="medication-card">
       <CardContent>
-        <Typography variant="h6" component="div" align="center" fontWeight="bold">
-          {medication.nombre}
-        </Typography>
-        <Typography variant="subtitle1" component="div" align="center" fontWeight="bold" marginBottom={1}>
-          {medication.accion_terapeutica}
-        </Typography>
-        <div className="card-text">
-          <strong>Efectos Secundarios:</strong> {medication.efectos_secundarios || 'N/A'}
-        </div>
-        <div className="card-text">
-          <strong>Contraindicaciones:</strong> {medication.contra_indicacion || 'N/A'}
-        </div>
-        <div className="card-text">
-          <strong>Indicaciones:</strong> {medication.indicacion || 'N/A'}
-        </div>
+        <Typography className="card-header">{medication.nombre}</Typography>
+        <Divider />
+        <Box className="card-body">
+          <Typography className="card-text">
+            <strong>Acción Terapéutica:</strong> {medication.accion_terapeutica}
+          </Typography>
+          <Typography className="card-text">
+            <strong>Efectos Secundarios:</strong> {medication.efectos_secundarios || 'N/A'}
+          </Typography>
+          <Typography className="card-text">
+            <strong>Contraindicaciones:</strong> {medication.contra_indicacion || 'N/A'}
+          </Typography>
+          <Typography className="card-text">
+            <strong>Indicaciones:</strong> {medication.indicacion || 'N/A'}
+          </Typography>
+        </Box>
       </CardContent>
     </Card>
   );

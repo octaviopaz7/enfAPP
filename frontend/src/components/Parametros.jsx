@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';  // Importa useNavigate
 import api from '../../../backend/src/routes/api';
-import { Container, Box, Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TextField, Button } from '@mui/material';
+import { Container, Box, Paper, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TextField, Button, useMediaQuery } from '@mui/material';
 import Swal from 'sweetalert2';
 
 const Parametros = () => {
@@ -20,6 +20,7 @@ const Parametros = () => {
     HemoglucotestPreprandial: '',
     HemoglucotestPostprandial: ''
   });
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const [dniPaciente, setDniPaciente] = useState('');
   const [nombrePaciente, setNombrePaciente] = useState('');
   const [apellidoPaciente, setApellidoPaciente] = useState('');
@@ -64,25 +65,37 @@ const Parametros = () => {
         ...parametros
       });
       console.log('Respuesta del servidor:', response.data);
-
+  
       const pacienteResponse = await api.get(`/pacientes/${response.data.dniPaciente}`);
       setNombrePaciente(pacienteResponse.data.nombre);
       setApellidoPaciente(pacienteResponse.data.apellido);
-
-      setParametros(response.data); // Actualiza el estado con los datos guardados
-      
+  
+      setParametros(response.data); // Actualiza el estado con los datos guardados  
+      // Muestra la alerta de éxito
       Swal.fire({
         icon: 'success',
-        title: '¡Éxito!',
-        text: `Los parametros fueron guardados`,
+        title: 'Datos guardados',
+        text: 'Los parámetros clínicos han sido guardados exitosamente',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        // Redirige a la habitación después de cerrar la alerta
+        navigate(`/habitaciones/${numero}/${cama}`);
       });
+  
 
-      // Redirige a la habitación después de guardar
-      navigate(`/habitaciones/${numero}/${cama}`);
     } catch (error) {
       console.error('Error al guardar los parámetros:', error.message);
+  
+      // Muestra la alerta de error
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un error al guardar los parámetros. Por favor, inténtelo nuevamente.',
+        confirmButtonText: 'OK'
+      });
     }
   };
+  
   const getClasificacion = (parametro, valor) => {
     const numericValue = parseFloat(valor);
     switch (parametro) {
@@ -150,20 +163,29 @@ const Parametros = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ fontWeight: 'bold'  }}>Parámetros Clínicos</TableCell>
-                    <TableCell style={{ fontWeight: 'bold' }}>Valor Referencia Mín.</TableCell>
-                    <TableCell style={{ fontWeight: 'bold' }}>Valor Referencia Máx.</TableCell>
-                    <TableCell style={{ fontWeight: 'bold' }}>Valor Tomado</TableCell>
-                    <TableCell style={{ fontWeight: 'bold' }}>Unidades</TableCell>
-                    <TableCell style={{ fontWeight: 'bold' }}>Clasificación</TableCell>
+                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Parámetros Clínicos</TableCell>
+                    {!isMobile && (
+                      <>
+                        <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Valor Referencia Mín.</TableCell>
+                        <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Valor Referencia Máx.</TableCell>
+                      </>
+                    )}
+                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Valor Tomado</TableCell>
+                    {!isMobile && <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Unidades</TableCell>}
+                    <TableCell style={{ fontWeight: 'bold', backgroundColor: '#f0f0f0' }}>Clasificación</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {['pas', 'pad', 'fc', 'fr', 'temp', 'peso', 'talla', 'spo2', 'glucometria', 'HemoglucotestPreprandial', 'HemoglucotestPostprandial'].map(parametro => (
-                    <TableRow key={parametro} >
-                      <TableCell >{getParametroName(parametro)}</TableCell>
-                      <TableCell>{getValorReferenciaMin(parametro)}</TableCell>
-                      <TableCell>{getValorReferenciaMax(parametro)}</TableCell>
+                    <TableRow key={parametro}>
+                      <TableCell style={{ backgroundColor: '#f8f8f8' }}>{getParametroName(parametro)}</TableCell>
+                      {!isMobile && (
+                        <>
+                          <TableCell>{getValorReferenciaMin(parametro)}</TableCell>
+                          <TableCell>{getValorReferenciaMax(parametro)}</TableCell>
+                        </>
+                      )}
+
                       <TableCell>
                         <TextField
                           value={parametros[parametro] || ''}
@@ -173,7 +195,7 @@ const Parametros = () => {
                           fullWidth
                         />
                       </TableCell>
-                      <TableCell>{getUnidades(parametro)}</TableCell>
+                      {!isMobile && <TableCell>{getUnidades(parametro)}</TableCell>}
                       <TableCell>{getClasificacion(parametro, parametros[parametro])}</TableCell>
                     </TableRow>
                   ))}
@@ -187,7 +209,9 @@ const Parametros = () => {
             </Box>
           </Box>
         </Paper>
-  );
+      </Box>
+    </Container>
+  );  
 };
 
 const getParametroName = (parametro) => {

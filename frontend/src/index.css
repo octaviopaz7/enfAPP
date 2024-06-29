@@ -49,38 +49,9 @@ body.medicamentos-bg {
   box-sizing: border-box;
 }
 
-/* Estilos globales para el cuerpo de la aplicación */
 body {
   font-family: 'Arial', sans-serif;
   background-color: #f0f0f0;
-}
-
-/* Estilos para los enlaces */
-a {
-  text-decoration: none;
-  color: #007bff;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Estilos para los encabezados */
-h1, h2, h3, h4, h5, h6 {
-  margin-bottom: 10px;
-}
-
-/* Estilos para los botones */
-button {
-  padding: 8px 12px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
 }
 
 .container {
@@ -93,79 +64,291 @@ button:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.header {
-  text-align: center;
-  margin-bottom: 20px;
+@media (max-width: 767px) {
+  .container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .header h1, .details p, .paciente p {
+    font-size: 1rem;
+  }
 }
 
-.header h1 {
-  margin-bottom: 5px;
+@media (min-width: 768px) {
+  .container {
+    max-width: 1200px;
+    padding: 20px;
+  }
+
+  .header h1, .details p, .paciente p {
+    font-size: 1.2rem;
+  }
+
+  .table-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .details, .paciente {
+    margin: 0 10px;
+  }
 }
 
-.details {
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+/* Estilos para el NavBar */
+.navbar {
+  background-color: #1976d2; /* Color de fondo del NavBar */
+  height: 56px; /* Ajustar la altura del NavBar */
+  display: flex;
+  align-items: center; /* Centrar verticalmente el contenido */
+  padding: 0 16px; /* Añadir padding para el espaciado */
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-title {
+  margin-left: 10px; /* Espacio entre el logo y el título */
+  font-size: 1.5rem; /* Tamaño del título */
+  color: #ffffff; /* Color del título */
+}
+
+.navbar-icons {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-icon {
+  margin-left: 30px; /* Espacio entre los íconos */
+  cursor: pointer; /* Cursor al pasar sobre los íconos */
+  color: #4652bb; /* Color de los íconos */
+}
+
+.navbar-search {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.15); /* Color de fondo del buscador */
+  border-radius: 4px; /* Borde redondeado */
+  padding: 4px 8px; /* Espaciado interno */
+  margin: 4px; /* Espacio entre el buscador y los otros elementos */
+}
+
+.navbar-search-input {
+  flex: 1; /* El input del buscador ocupa todo el espacio disponible */
+  border: none; /* Sin borde */
+  background: none; /* Fondo transparente */
+  color: #2b29a5; /* Color del texto */
+  font-size: 1rem; /* Tamaño de fuente */
+  outline: none; /* Sin borde al enfocar */
+}
+
+/* Estilos para la barra de búsqueda */
+.Search {
+  display: flex;
+  align-items: center;
+  position: relative;
   border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  background-color: rgb(255, 255, 255);
+  transition: background-color 0.3s;
+  margin: 0 16px;
+  width: 300px; /* Ajustar el tamaño de la barra de búsqueda */
 }
 
-.details p {
-  margin: 5px 0;
+.Search:hover {
+  background-color: rgb(255, 255, 255);
 }
 
-.paciente {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+.SearchIconWrapper {
+  padding: 0 12px;
+  height: 100%;
+  position: absolute;
+  right: 0; /* Ajustar la posición a la derecha */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.paciente p {
-  margin: 5px 0;
-}
-.medication-card {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #fff;
-  margin: 10px auto;
-  padding: 10px;
-  width: 18rem;
+/* Ajustar el color de la lupa a gris */
+.SearchIconWrapper svg {
+  color: #666666; /* Color gris */
 }
 
-.card-header {
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
+/* Estilos adicionales */
+.drip-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #fffdfd;
+  margin-right: 10px; /* Espacio a la derecha del icono de goteo */
+}
+
+.drip-text {
+  margin-left: 5px; /* Espacio entre el icono y el texto */
+  font-size: 1rem;
+}
+
+/* Estilos para los iconos animados */
+.calculator {
+  width: px; /* Revisar este valor */
+  height: 100px;
+  background-color: #ffffff; /* Color personalizado */
+  border-radius: 10px;
+  position: fixed; /* Ajustar según sea necesario */
+  display: inline-block;
+}
+
+.screen {
+  width: 90%;
+  height: 20%;
+  background-color: #f1f1f1;
+  margin: 5px auto;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  color: #ffffff; /* Color del texto */
   font-weight: bold;
 }
 
-.card-body {
-  padding: 10px;
+.button-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3px;
 }
 
-.card-title {
-  font-size: 1.2em;
-  margin-bottom: 5px;
+.button {
+  width: 10%;
+  height: 10%;
+  background-color: #ffffff;
+  border-radius: 30%;
+  transition: background-color 0.4s;
+}
+
+.button:hover {
+  background-color: #ffffff; /* Color al pasar el cursor */
+}
+
+.drip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.bag {
+  width: 20px;
+  height: 30px;
+  background-color: rgb(82, 160, 224);
+  border-radius: 5px;
+  position: relative;
+}
+
+.bag::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tube {
+  width: 5px;
+  height: 20px;
+  background-color: #ffffff;
+  margin-top: 2px;
+  position: relative;
+}
+
+.tube::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  background-color: #00f;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: drip 2s infinite;
+}
+
+@keyframes drip {
+  0% {
+    top: 1px;
+    opacity: 3;
+  }
+  100% {
+    top: 30px;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .Search {
+    width: 50%; /* Ocupar todo el ancho disponible */
+    margin: 0; /* Eliminar el margen lateral */
+    padding: 8px; /* Ajustar el espacio interno */
+  }
+
+  .SearchIconWrapper {
+    padding: 0 8px; /* Reducir el espacio del ícono */
+  }
+
+  .navbar-icons {
+    margin-right: 8px; /* Ajustar el margen entre los íconos */
+  }
+
+  .drip-text {
+    display: none; /* Ocultar el texto asociado al icono de goteo en pantallas pequeñas */
+  }
+}
+/* CARD VADEMECUM*/
+.medication-card {
+  max-width: 345px;
+  margin: 20px auto;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color: #ffffff;
+  transition: transform 0.2s;
+}
+
+.medication-card:hover {
+  transform: scale(1.05);
+}
+
+.card-header {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #00796b;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.card-body {
+  margin-top: 16px;
 }
 
 .card-text {
-  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #37474f;
+  margin-bottom: 10px;
 }
 
-.formControl {
-  margin-bottom: 20px;
-  min-width: 200px;
-  float: right;
-}
+@media (max-width: 600px) {
+  .medication-card {
+    max-width: 90%;
+    padding: 15px;
+  }
 
-.select {
-  background-color: white;
-  border-radius: 4px;
-}
-
-.select .MuiSelect-select {
-  padding: 10px 14px;
+  .card-header {
+    font-size: 1.5rem;
+  }
 }
