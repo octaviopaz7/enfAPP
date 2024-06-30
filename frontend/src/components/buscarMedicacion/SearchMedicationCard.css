@@ -1,0 +1,48 @@
+/* SearchMedicationCard.css */
+.medication-card {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin: 10px auto; /* Centrar la tarjeta */
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    background-color: #ffffff;
+    transition: transform 0.2s;
+  }
+  
+  .medication-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00796b;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  
+  .card-body {
+    margin-top: 16px;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #37474f;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 600px) {
+    .medication-card {
+      width: calc(100% - 20px);
+      max-width: 90%;
+      padding: 15px;
+    }
+  
+    .card-header {
+      font-size: 1.3rem;
+    }
+  }
+  

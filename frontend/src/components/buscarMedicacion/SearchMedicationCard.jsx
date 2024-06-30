@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography, Box, Divider } from '@mui/material';
+import './SearchMedicationCard.css'; // Importa los estilos
 
 const SearchMedicationCard = ({ medication }) => {
   return (
