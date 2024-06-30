@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Menu, MenuItem, Box} from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Menu, MenuItem, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
-import DripCalculatorIcon from './DripCalculatorIcon'
+import DripCalculatorIcon from './DripCalculatorIcon';
 import api from '../../../../backend/src/routes/api';
 import Swal from 'sweetalert2';
+import './Navbar.css'; // Importa el archivo CSS
 
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,7 +33,6 @@ const NavBar = () => {
   };
 
   const handleLogout = () => {
-    // Mostrar SweetAlert2 al cerrar sesión exitosamente
     Swal.fire({
       icon: 'success',
       title: 'Sesión cerrada',
@@ -59,10 +59,6 @@ const NavBar = () => {
   const menuId = 'primary-search-account-menu';
 
   const handleSearch = async () => {
-    if (!query) {
-      return;
-    }
-
     try {
       const response = await api.get('/medicamentos/search', {
         params: { nombre: query }
@@ -78,7 +74,11 @@ const NavBar = () => {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      handleSearch();
+      if (!query.trim()) {
+        navigate(`/Search-medication/search`);
+      } else {
+        handleSearch();
+      }
     }
   };
 
@@ -105,7 +105,7 @@ const NavBar = () => {
             </div>
             <InputBase
               className="StyledInputBase"
-              placeholder="Buscar Medicamento"
+              placeholder="   Buscar Medicamento"
               inputProps={{ 'aria-label': 'buscar' }}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -119,7 +119,7 @@ const NavBar = () => {
               aria-label="calculadora de goteo"
               onClick={handleGoteoClick}
               color="inherit"
-              sx={{ marginLeft: 'auto' }} // Añade espacio a la derecha
+              sx={{ marginLeft: 'auto' }}
             >
               <DripCalculatorIcon />
             </IconButton>
