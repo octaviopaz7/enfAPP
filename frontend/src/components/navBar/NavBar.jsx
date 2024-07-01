@@ -65,6 +65,7 @@ const NavBar = () => {
       });
 
       setMedications(response.data);
+      setQuery('');
       navigate(`/Search-medication/search?query=${query}`);
 
     } catch (error) {
