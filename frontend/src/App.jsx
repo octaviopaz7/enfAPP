@@ -11,14 +11,14 @@ import CambiarContraseña from './components/cambiarContraseña/CambiarContrase�
 import SearchMedication from './components/buscarMedicacion/SearchMedication';
 import Gotero from './components/gotero/Gotero';
 import Parametros from './components/parametros/Parametros';
-
+import Main from './components/Principal/Main';
 
 const App = () => {
   const location = useLocation();
   const isAuthRoute = location.pathname === '/login' || location.pathname === '/register';
 
   useEffect(() => {
-    //console.log(location.pathname);
+    // Lógica para cambiar clases de fondo basado en la ubicación
     switch (true) {
       case location.pathname.startsWith('/habitaciones/') || location.pathname === '/paciente-form':
         document.body.classList.add('habitaciones-bg');
@@ -28,7 +28,7 @@ const App = () => {
         document.body.classList.add('login-bg');
         document.body.classList.remove('registro-bg', 'pisos-bg', 'habitaciones-bg', 'gotero-bg', 'parametros-bg', 'medicamentos-bg');
         break;
-      case location.pathname === '/register' || location.pathname === '/cambiar-contrase%C3%B1a':
+      case location.pathname === '/register' || location.pathname === '/cambiar-contraseña':
         document.body.classList.add('registro-bg');
         document.body.classList.remove('login-bg', 'pisos-bg', 'habitaciones-bg', 'gotero-bg', 'parametros-bg', 'medicamentos-bg');
         break;
@@ -54,7 +54,6 @@ const App = () => {
     }
   }, [location.pathname]);
 
-
   return (
     <HabitacionesProvider>
       {!isAuthRoute && <NavBar />}
@@ -69,6 +68,7 @@ const App = () => {
         <Route path="/habitacion/:numero/:cama/parametros" element={<Parametros />} />
         <Route path="/cambiar-contraseña" element={<CambiarContraseña />} />
         <Route path="/calculadora-de-goteo" element={<Gotero />} />
+        <Route path="/Main" element={<Main />} />
       </Routes>
     </HabitacionesProvider>
   );
