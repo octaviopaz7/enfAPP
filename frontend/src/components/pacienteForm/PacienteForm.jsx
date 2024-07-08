@@ -59,22 +59,22 @@ const PacienteForm = ({ paciente = {}, onSave }) => { // Añadir numero y cama c
     try {
       if (paciente && paciente.dni) {
         // Si el paciente existe, actualiza el paciente
-        await api.put(`http://localhost:5000/api/pacientes/${paciente.dni}`, pacienteData);
+        await api.put(`/pacientes/${paciente.dni}`, pacienteData);
         if (onSave) {
           onSave(pacienteData);
         }
       } else {
         // Si el paciente no existe, crea un nuevo paciente
-        const response = await api.post('http://localhost:5000/api/pacientes', pacienteData);
+        const response = await api.post('/pacientes', pacienteData);
         const pacienteDni = response.data.dni; // Obtener el DNI del paciente creado
 
-        await api.post('http://localhost:5000/api/habitaciones', {
+        await api.post('/habitaciones', {
           numero,
           estado: 'ocupada', // Por defecto se asigna como ocupada al crear el paciente
           cama,
           pacienteDni: pacienteDni,
         });
-
+        
         Swal.fire({
           icon: 'success',
           title: '¡Éxito!',
