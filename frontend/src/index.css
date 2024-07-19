@@ -1,42 +1,42 @@
 /*background para login*/
 body.login-bg {
-  background: url('./assets/imagenes/Login.jpg') no-repeat center center;
+  background: url('./assets/imagenes/Login.webp') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
 
 body.registro-bg {
-  background: url('./assets/imagenes/Registro.jpg') no-repeat center center;
+  background: url('./assets/imagenes/Registro.webp') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
 
 body.pisos-bg {
-  background: url('./assets/imagenes/Pisos.jpg') no-repeat center center;
+  background: url('./assets/imagenes/Pisos.webp') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
 
 body.habitaciones-bg {
-  background: url('./assets/imagenes/Habitacion.jpg') no-repeat center center;
+  background: url('./assets/imagenes/Habitacion.webp') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
 
 body.gotero-bg {
-  background: url('./assets/imagenes/Gotero.jpg') no-repeat center center;
+  background: url('./assets/imagenes/Gotero.webp') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
 
 body.parametros-bg {
-  background: url('./assets/imagenes/Parametros.jpg') no-repeat center center;
+  background: url('./assets/imagenes/Parametros.webp') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
 
 body.medicamentos-bg {
-  background: url('./assets/imagenes/Medicamentos.jpg') no-repeat center center;
+  background: url('./assets/imagenes/Medicamentos.webp') no-repeat center center;
   background-size: 100% 100%;
   background-attachment: fixed;
 }
